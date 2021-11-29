@@ -3,6 +3,7 @@ package aoc.util
 import scala.annotation.tailrec
 import scala.io.Source
 import scala.math.Numeric.Implicits.*
+import scala.collection.mutable.ArrayBuffer
 
 def loadString(path: String): String = Source.fromResource(path).mkString
 
@@ -44,3 +45,14 @@ def iterate[T](value: T, times: Int)(f: T => T): T =
 def iterateUntilSteadyState[T](current: T)(f: T => T): T =
   val next = f(current)
   if (next == current) current else iterateUntilSteadyState(next)(f)
+
+def uninterleave[T](items: Seq[T]): (Seq[T], Seq[T]) =
+  val items1 = new ArrayBuffer[T]()
+  val items2 = new ArrayBuffer[T]()
+  for 
+    (item, i) <- items.zipWithIndex
+    targetItems = if i % 2 == 0 then items1 else items2
+  do
+    targetItems.addOne(item)
+  (items1.toSeq, items2.toSeq)
+
