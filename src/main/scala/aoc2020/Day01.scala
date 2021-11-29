@@ -1,6 +1,6 @@
 package aoc2020
 
-import aoc.util._
+import aoc.util.*
 
 val entries = loadLines("aoc2020/input-2020-1.txt").map(_.toInt)
 

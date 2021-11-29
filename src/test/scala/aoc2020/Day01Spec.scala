@@ -1,7 +1,7 @@
 package aoc2020
 
 import aoc.UnitTest
-import aoc.util._
+import aoc.util.*
 
 class Day01Spec extends UnitTest {
 

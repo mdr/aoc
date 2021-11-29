@@ -1,6 +1,6 @@
 package aoc2015
 
-import aoc.util._
+import aoc.util.*
 
 val instructions = loadString("aoc2015/input-2015-1.txt")
 

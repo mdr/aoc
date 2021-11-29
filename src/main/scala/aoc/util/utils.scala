@@ -2,7 +2,7 @@ package aoc.util
 
 import scala.annotation.tailrec
 import scala.io.Source
-import scala.math.Numeric.Implicits._
+import scala.math.Numeric.Implicits.*
 
 def loadString(path: String): String = Source.fromResource(path).mkString
 

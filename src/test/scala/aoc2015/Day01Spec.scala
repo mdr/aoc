@@ -1,6 +1,6 @@
 package aoc2015
 
-import aoc.util._
+import aoc.util.*
 import aoc.UnitTest
 
 class Day01Spec extends UnitTest {
