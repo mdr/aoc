@@ -14,7 +14,7 @@ class Day01Spec extends UnitTest {
   }
 
   "Solution to part 1" should "be correct" in {
-    day1Part1 shouldEqual 232
+    day01Part1 shouldEqual 232
   }
 
   "firstInstructionPositionThatEntersBasement" should "work" in {
@@ -23,7 +23,7 @@ class Day01Spec extends UnitTest {
   }
 
   "Solution to part 2" should "be correct" in {
-    day1Part2 shouldEqual 1783
+    day01Part2 shouldEqual 1783
   }
 
 }

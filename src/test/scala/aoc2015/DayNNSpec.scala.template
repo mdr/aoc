@@ -6,11 +6,11 @@ import aoc.UnitTest
 class DayNNSpec extends UnitTest {
 
   "Solution to part 1" should "be correct" ignore {
-    dayNPart1 shouldEqual -1
+    dayNNPart1 shouldEqual -1
   }
 
   "Solution to part 2" should "be correct" ignore {
-    day1NPart2 shouldEqual -1
+    dayNNPart2 shouldEqual -1
   }
 
 }

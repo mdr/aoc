@@ -2,6 +2,6 @@ package aoc2015
 
 import aoc.util.*
 
-def dayNNPart1: Int = loadString("aoc2015/input-2015-NN.txt").length
+def dayNNPart1: Int = loadString("aoc2015/input-2015-?N.txt").length
 
-def dayNNPart2: Int = loadString("aoc2015/input-2015-NN.txt").length
+def dayNNPart2: Int = loadString("aoc2015/input-2015-?N.txt").length

@@ -4,7 +4,7 @@ import aoc.util.*
 
 val boxes = loadLines("aoc2015/input-2015-2.txt").map(parseBox)
 
-def day2Part1: Int = boxes.sumBy(_.wrappingPaperRequired)
+def day02Part1: Int = boxes.sumBy(_.wrappingPaperRequired)
 
 case class Box(length: Int, width: Int, height: Int):
   def area1: Int       = length * width
@@ -24,4 +24,4 @@ def parseBox(s: String): Box =
   val List(length, width, height) = s.split("x").toList
   Box(length.toInt, width.toInt, height.toInt)
 
-def day2Part2: Int = boxes.sumBy(_.ribbonRequired)
+def day02Part2: Int = boxes.sumBy(_.ribbonRequired)

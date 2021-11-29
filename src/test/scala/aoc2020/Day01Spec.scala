@@ -20,11 +20,11 @@ class Day01Spec extends UnitTest {
   }
 
   "Solution to part 1" should "be correct" in {
-    day1Part1 shouldEqual 989824
+    day01Part1 shouldEqual 989824
   }
 
   "Solution to part 2" should "be correct" in {
-    day1Part2 shouldEqual 66432240
+    day01Part2 shouldEqual 66432240
   }
 
 }

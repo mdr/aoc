@@ -4,7 +4,7 @@ import aoc.util.*
 
 val instructions = loadString("aoc2015/input-2015-1.txt")
 
-def day1Part1: Int = followFloorInstructions(instructions)
+def day01Part1: Int = followFloorInstructions(instructions)
 
 def followFloorInstructions(s: String): Int =
   followFloorInstructions(parseInstructions(s), current = 0)
@@ -32,4 +32,4 @@ def firstInstructionPositionThatEntersBasement(s: String): Int =
     .scanLeft(0)(_ + _.offset)
     .indexWhere(_ < 0)
 
-def day1Part2: Int = firstInstructionPositionThatEntersBasement(instructions)
+def day01Part2: Int = firstInstructionPositionThatEntersBasement(instructions)

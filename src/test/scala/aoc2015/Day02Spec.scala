@@ -11,7 +11,7 @@ class Day02Spec extends UnitTest {
   }
 
   "Solution to part 1" should "be correct" in {
-    day2Part1 shouldEqual 1586300
+    day02Part1 shouldEqual 1586300
   }
 
   "ribbonRequired" should "work" in {
@@ -20,7 +20,7 @@ class Day02Spec extends UnitTest {
   }
 
   "Solution to part 2" should "be correct" in {
-    day2Part2 shouldEqual 3737498
+    day02Part2 shouldEqual 3737498
   }
 
 }

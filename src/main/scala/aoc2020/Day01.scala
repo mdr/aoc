@@ -4,11 +4,11 @@ import aoc.util.*
 
 val entries = loadLines("aoc2020/input-2020-1.txt").map(_.toInt)
 
-def day1Part1: Int =
+def day01Part1: Int =
   val matchingEntries = findEntriesThatSum(entries, numberOfEntries = 2, targetSum = 2020).single
   matchingEntries.product
 
-def day1Part2: Int =
+def day01Part2: Int =
   val matchingEntries = findEntriesThatSum(entries, numberOfEntries = 3, targetSum = 2020).single
   matchingEntries.product
 

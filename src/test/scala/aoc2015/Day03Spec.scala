@@ -12,7 +12,7 @@ class Day03Spec extends UnitTest {
   }
 
   "Solution to part 1" should "be correct" in {
-    day3Part1 shouldEqual 2565
+    day03Part1 shouldEqual 2565
   }
 
   "countLocationsBySantaAndRoboSanta" should "work" in {
@@ -22,7 +22,7 @@ class Day03Spec extends UnitTest {
   }
 
   "Solution to part 2" should "be correct" in {
-    day3Part2 shouldEqual 2639
+    day03Part2 shouldEqual 2639
   }
 
 }

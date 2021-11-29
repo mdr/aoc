@@ -4,7 +4,7 @@ import aoc.util.*
 
 val directions: Seq[Direction] = parseDirections(loadString("aoc2015/input-2015-3.txt"))
 
-def day3Part1: Int = countLocationsVisited(directions)
+def day03Part1: Int = countLocationsVisited(directions)
 
 def parseDirection(c: Char): Direction =
   c match
@@ -26,4 +26,4 @@ def countLocationsVisitedBySantaAndRoboSanta(directions: Seq[Direction]): Int =
   val allVisitedPoints = locationsVisited(directions1) ++ locationsVisited(directions2)
   allVisitedPoints.size
 
-def day3Part2: Int = countLocationsBySantaAndRoboSanta(directions)
+def day03Part2: Int = countLocationsVisitedBySantaAndRoboSanta(directions)
