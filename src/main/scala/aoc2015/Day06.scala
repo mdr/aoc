@@ -52,14 +52,12 @@ object Day06:
       point.x >= bottomLeft.x && point.y >= bottomLeft.y &&
         point.x <= topRight.x && point.y <= topRight.y
 
-  object InstructionParser extends RegexParsers with WithParseWithExceptions:
+  object InstructionParser extends DefaultParser:
 
     private lazy val instruction: Parser[Instruction] = instructionType ~ rectangle ^^ {
       case instructionType ~ rectangle =>
         Instruction(instructionType, rectangle)
     }
-
-    private lazy val integer: Parser[Int] = """(0|[1-9]\d*)""".r ^^ (_.toInt)
 
     private lazy val point: Parser[Point] = (integer <~ ",") ~ integer ^^ { case (x ~ y) => Point(x, y) }
 

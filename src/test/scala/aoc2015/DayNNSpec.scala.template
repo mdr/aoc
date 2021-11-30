@@ -3,7 +3,7 @@ package aoc2015
 import aoc.util.*
 import aoc.UnitTest
 
-class DayNNSpec extends UnitTest {
+class DayNNSpec extends UnitTest:
 
   "Solution to part 1" should "be correct" ignore {
     dayNNPart1 shouldEqual -1
@@ -12,5 +12,3 @@ class DayNNSpec extends UnitTest {
   "Solution to part 2" should "be correct" ignore {
     dayNNPart2 shouldEqual -1
   }
-
-}
