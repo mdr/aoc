@@ -15,8 +15,8 @@ class Day07Spec extends UnitTest:
                      y RSHIFT 2 -> g
                      NOT x -> h
                      NOT y -> i"""
-    val parts    = example.lines.toScala(Seq).map(PartParser(_))
-    val emulator = new CircuitEmulator(parts)
+    val partsAndWires    = organiseParts(example.lines.toScala(Seq).map(PartParser(_)))
+    val emulator = new CircuitEmulator(partsAndWires)
     emulator.signals shouldEqual Map(
       "d" -> 72,
       "e" -> 507,
