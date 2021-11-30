@@ -2,23 +2,23 @@ package aoc2015
 
 import aoc.util.*
 
-val instructions = loadString("aoc2015/input-2015-1.txt")
+private val instructions = loadString("aoc2015/input-2015-1.txt")
 
 def day01Part1: Int = followFloorInstructions(instructions)
 
 def followFloorInstructions(s: String): Int =
   followFloorInstructions(parseInstructions(s), current = 0)
 
-def parseInstructions(s: String): List[Instruction] = s.toList.map(parseInstruction)
+private def parseInstructions(s: String): List[Instruction] = s.toList.map(parseInstruction)
 
-def parseInstruction(c: Char): Instruction =
+private def parseInstruction(c: Char): Instruction =
   c match {
     case '(' => Instruction.Up
     case ')' => Instruction.Down
     case c   => throw RuntimeException(s"Cannot parse instructions, unexpected character $c")
   }
 
-enum Instruction(val offset: Int):
+private enum Instruction(val offset: Int):
   case Up extends Instruction(offset = 1)
   case Down extends Instruction(offset = -1)
 
