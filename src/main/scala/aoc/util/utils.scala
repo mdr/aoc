@@ -56,3 +56,14 @@ def uninterleave[T](items: Seq[T]): (Seq[T], Seq[T]) =
     targetItems.addOne(item)
   (items1.toSeq, items2.toSeq)
 
+class MemoContext[K, V](f: K => V):
+  private var calculated: Map[K, V] = Map()
+
+  def apply(k: K) = calculated.get(k) getOrElse calculate(k)
+
+  private def calculate(k: K): V =
+    val v = f(k)
+    calculated = calculated + (k -> v)
+    v
+
+def memo[K, V](f: K => V): K => V = new MemoContext(f).apply

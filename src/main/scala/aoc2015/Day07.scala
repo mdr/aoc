@@ -9,8 +9,8 @@ object Wire {
   def apply(s: String): Wire = s
 }
 
-def organiseParts(partsAndWires: Seq[PartAndOutputWire]): Map[Wire, Part] = 
-    partsAndWires.map { case PartAndOutputWire(part, wire) => wire -> part }.toMap
+def organiseParts(partsAndWires: Seq[PartAndOutputWire]): Map[Wire, Part] =
+  partsAndWires.map { case PartAndOutputWire(part, wire) => wire -> part }.toMap
 
 val partsAndWires = organiseParts(loadLines("aoc2015/input-2015-7.txt").map(PartParser(_)))
 
@@ -22,20 +22,18 @@ def day07Part2: Int =
   val emulator = new CircuitEmulator(partsAndWires + ("b" -> ConstantSignal(ConstantInput(day07Part1))))
   emulator.probe("a")
 
-class CircuitEmulator(partsByOutputWire: Map[Wire, Part]) {
+class CircuitEmulator(partsByOutputWire: Map[Wire, Part]):
 
-  private var _signals: Map[Wire, Int] = Map()
+  private val memoisedProbe = memo(calculateSignal)
 
-  def probe(wire: Wire): Int = _signals.get(wire) getOrElse calculateSignal(wire)
+  def probe(wire: Wire): Int = memoisedProbe(wire)
 
   private def getSignal(input: GateInput): Int =
     input match
       case ConstantInput(signal) => signal
       case WireInput(wire)       => probe(wire)
 
-  def signals: Map[Wire, Int] =
-    partsByOutputWire.keys.foreach(probe)
-    _signals
+  def signals: Map[Wire, Int] = partsByOutputWire.keys.map(wire => wire -> probe(wire)).toMap
 
   private def calculateSignal(wire: Wire): Int =
     val signal = partsByOutputWire(wire) match
@@ -45,11 +43,7 @@ class CircuitEmulator(partsByOutputWire: Map[Wire, Part]) {
       case LeftShiftGate(input, shift)  => getSignal(input) << shift
       case RightShiftGate(input, shift) => getSignal(input) >> shift
       case NotGate(input)               => ~getSignal(input)
-    val finalValue = signal & 0xffff
-    _signals = _signals + (wire -> finalValue)
-    finalValue
-
-}
+    signal & 0xffff
 
 sealed trait GateInput
 case class WireInput(wire: Wire)      extends GateInput
@@ -80,15 +74,14 @@ object PartParser extends DefaultParser:
   lazy val notGate: Parser[NotGate] = ("NOT" ~> input) ^^ { case input =>
     NotGate(input)
   }
-  lazy val leftShiftGate: Parser[LeftShiftGate] = ((input <~ "LSHIFT") ~ integer) ^^ {
-    case input ~ shift =>
-      LeftShiftGate(input, shift)
+  lazy val leftShiftGate: Parser[LeftShiftGate] = ((input <~ "LSHIFT") ~ integer) ^^ { case input ~ shift =>
+    LeftShiftGate(input, shift)
   }
-  lazy val rightShiftGate: Parser[RightShiftGate] = ((input <~ "RSHIFT") ~ integer) ^^ {
-    case input ~ shift =>
-      RightShiftGate(input, shift)
+  lazy val rightShiftGate: Parser[RightShiftGate] = ((input <~ "RSHIFT") ~ integer) ^^ { case input ~ shift =>
+    RightShiftGate(input, shift)
   }
   lazy val part: Parser[Part] = andGate | orGate | notGate | leftShiftGate | rightShiftGate | constantSignal
-  lazy val partAndOutputWire: Parser[PartAndOutputWire] = (part <~ "->") ~ wire ^^ { case part ~ outputWire => PartAndOutputWire(part, outputWire) }
-  
+  lazy val partAndOutputWire: Parser[PartAndOutputWire] = (part <~ "->") ~ wire ^^ { case part ~ outputWire =>
+    PartAndOutputWire(part, outputWire)
+  }
   def apply(s: String): PartAndOutputWire = parseWithExceptions(partAndOutputWire, s)
