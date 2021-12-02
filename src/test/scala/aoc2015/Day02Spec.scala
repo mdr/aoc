@@ -3,7 +3,7 @@ package aoc2015
 import aoc.util.*
 import aoc.UnitTest
 
-class Day02Spec extends UnitTest {
+class Day02Spec extends UnitTest:
 
   "wrappingPaperRequired" should "work" in {
     parseBox("2x3x4").wrappingPaperRequired shouldEqual 58
@@ -22,5 +22,3 @@ class Day02Spec extends UnitTest {
   "Solution to part 2" should "be correct" in {
     day02Part2 shouldEqual 3737498
   }
-
-}

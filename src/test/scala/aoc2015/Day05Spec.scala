@@ -3,7 +3,7 @@ package aoc2015
 import aoc.util.*
 import aoc.UnitTest
 
-class Day05Spec extends UnitTest {
+class Day05Spec extends UnitTest:
 
   "containsAtLeastThreeVowels" should "work" in {
     containsAtLeastThreeVowels("ugknbfddgicrmopn") shouldBe true
@@ -47,5 +47,3 @@ class Day05Spec extends UnitTest {
   "Solution to part 2" should "be correct" in {
     day05Part2 shouldEqual 53
   }
-
-}

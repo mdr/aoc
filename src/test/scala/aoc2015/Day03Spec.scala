@@ -3,7 +3,7 @@ package aoc2015
 import aoc.util.*
 import aoc.UnitTest
 
-class Day03Spec extends UnitTest {
+class Day03Spec extends UnitTest:
 
   "countLocationsVisited" should "work" in {
     countLocationsVisited(parseDirections(">")) shouldEqual 2
@@ -24,5 +24,3 @@ class Day03Spec extends UnitTest {
   "Solution to part 2" should "be correct" in {
     day03Part2 shouldEqual 2639
   }
-
-}

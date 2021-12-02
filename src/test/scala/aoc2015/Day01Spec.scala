@@ -1,9 +1,9 @@
 package aoc2015
-
+ 
 import aoc.util.*
 import aoc.UnitTest
 
-class Day01Spec extends UnitTest {
+class Day01Spec extends UnitTest:
 
   "followFloorInstructions" should "work" in {
     followFloorInstructions("(())") shouldEqual 0
@@ -25,5 +25,3 @@ class Day01Spec extends UnitTest {
   "Solution to part 2" should "be correct" in {
     day01Part2 shouldEqual 1783
   }
-
-}

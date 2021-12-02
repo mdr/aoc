@@ -3,7 +3,7 @@ package aoc2015
 import aoc.util.*
 import aoc.UnitTest
 
-class Day04Spec extends UnitTest {
+class Day04Spec extends UnitTest:
 
   "md5" should "work" in {
     toHex(md5("abcdef609043")) should startWith("000001dbbfa")
@@ -25,5 +25,3 @@ class Day04Spec extends UnitTest {
   "Solution to part 2" should "be correct" in {
     day04Part2 shouldEqual 1038736
   }
-
-}

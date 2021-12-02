@@ -11,4 +11,6 @@ trait DefaultParser extends RegexParsers {
 
   protected lazy val integer: Parser[Int] = """(0|[1-9]\d*)""".r ^^ (_.toInt)
 
+  protected lazy val long: Parser[Long] = """(0|[1-9]\d*)""".r ^^ (_.toLong)
+
 }

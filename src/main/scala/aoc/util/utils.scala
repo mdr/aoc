@@ -4,6 +4,7 @@ import scala.annotation.tailrec
 import scala.io.Source
 import scala.math.Numeric.Implicits.*
 import scala.collection.mutable.ArrayBuffer
+import scala.jdk.StreamConverters._
 
 def loadString(path: String): String = Source.fromResource(path).mkString
 
@@ -67,3 +68,7 @@ class MemoContext[K, V](f: K => V):
     v
 
 def memo[K, V](f: K => V): K => V = new MemoContext(f).apply
+
+def getLines(s: String): Seq[String] = s.lines.toScala(Seq)
+
+def getIntLines(s: String): Seq[Int] = getLines(s).map(_.trim.toInt)

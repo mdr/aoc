@@ -2,21 +2,21 @@ package aoc2015
 
 import aoc.util.*
 import aoc.UnitTest
-import scala.jdk.StreamConverters._
 
 class Day07Spec extends UnitTest:
 
   "Example" should "be correct" in {
-    val example  = """123 -> x
-                     456 -> y
-                     x AND y -> d
-                     x OR y -> e
-                     x LSHIFT 2 -> f
-                     y RSHIFT 2 -> g
-                     NOT x -> h
-                     NOT y -> i"""
-    val partsAndWires    = organiseParts(example.lines.toScala(Seq).map(PartParser(_)))
-    val emulator = new CircuitEmulator(partsAndWires)
+    val example =
+      """123 -> x
+         456 -> y
+         x AND y -> d
+         x OR y -> e
+         x LSHIFT 2 -> f
+         y RSHIFT 2 -> g
+         NOT x -> h
+         NOT y -> i"""
+    val partsAndWires = organiseParts(getLines(example).map(PartParser(_)))
+    val emulator      = new CircuitEmulator(partsAndWires)
     emulator.signals shouldEqual Map(
       "d" -> 72,
       "e" -> 507,
