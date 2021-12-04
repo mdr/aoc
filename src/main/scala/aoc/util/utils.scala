@@ -27,6 +27,8 @@ extension [T](xs: Seq[Seq[T]])
           x  <- first
           xs <- rest.sequence
         yield x +: xs
+  
+  def transpose: Seq[Seq[T]] = sequence
 
 extension [A](items: IterableOnce[A])
   def sumBy[B](f: A => B)(using numeric: Numeric[B]): B =

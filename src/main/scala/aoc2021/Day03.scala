@@ -20,7 +20,7 @@ case class BinaryNumberCollection(numbers: Seq[BinaryNumber]):
   def epsilonRate: Long =
     BinaryNumber((0 until numberLength).map(leastCommonBit).mkString).toLong
 
-  def powerConsumption: Long = gammaRate.toLong * epsilonRate.toLong
+  def powerConsumption: Long = gammaRate * epsilonRate
 
   def bitSum(i: Int) =
     numbers.map(_.bitAt(i)).sumBy {
