@@ -40,6 +40,9 @@ extension [A](items: IterableOnce[A])
       result = result + f(iterator.next())
     result
 
+extension [A](items: Iterable[A])
+  def counts: Map[A, Int] = items.groupMapReduce(identity)(_ => 1)(_ + _)
+
 @tailrec
 def iterate[T](value: T, times: Int)(f: T => T): T =
   if (times == 0) value else iterate(f(value), times - 1)(f)
