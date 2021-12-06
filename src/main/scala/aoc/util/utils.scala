@@ -27,7 +27,7 @@ extension [T](xs: Seq[Seq[T]])
           x  <- first
           xs <- rest.sequence
         yield x +: xs
-  
+
   def transpose: Seq[Seq[T]] = sequence
 
 extension [A](items: IterableOnce[A])
@@ -42,10 +42,13 @@ extension [A](items: IterableOnce[A])
 
 extension [A](items: Iterable[A])
   def counts: Map[A, Int] = items.groupMapReduce(identity)(_ => 1)(_ + _)
+  def countsLong: Map[A, Long] = items.groupMapReduce(identity)(_ => 1L)(_ + _)
 
 @tailrec
 def iterate[T](value: T, times: Int)(f: T => T): T =
   if (times == 0) value else iterate(f(value), times - 1)(f)
+
+extension [A](f: A => A) def iterate(times: Int): A => A = a => aoc.util.iterate(a, times)(f)
 
 @tailrec
 def iterateUntilSteadyState[T](current: T)(f: T => T): T =
@@ -55,11 +58,10 @@ def iterateUntilSteadyState[T](current: T)(f: T => T): T =
 def uninterleave[T](items: Seq[T]): (Seq[T], Seq[T]) =
   val items1 = new ArrayBuffer[T]()
   val items2 = new ArrayBuffer[T]()
-  for 
+  for
     (item, i) <- items.zipWithIndex
     targetItems = if i % 2 == 0 then items1 else items2
-  do
-    targetItems.addOne(item)
+  do targetItems.addOne(item)
   (items1.toSeq, items2.toSeq)
 
 class MemoContext[K, V](f: K => V):
@@ -77,3 +79,7 @@ def memo[K, V](f: K => V): K => V = new MemoContext(f).apply
 def getLines(s: String): Seq[String] = s.lines.toScala(Seq)
 
 def getIntLines(s: String): Seq[Int] = getLines(s).map(_.trim.toInt)
+
+extension [K, V](map: Map[K, V])
+  def mergeWith(that: Map[K, V])(f: (V, V) => V): Map[K, V] =
+    (map.toSeq ++ that.toSeq).groupMapReduce(_._1)(_._2)(f)
