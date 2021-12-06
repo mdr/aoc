@@ -37,15 +37,13 @@ object SlowFishState:
 
 case class FastFishState(fishCounts: Bag[Fish]):
 
-  def evolve: FastFishState =
-    val newFishCounts =
-      fishCounts.bagFlatMap { case (fish, count) =>
-        val (evolvedFish, maybeNewFish) = fish.evolve
-        val evolvedFishBag              = Bag(evolvedFish -> count)
-        val newFishBag                  = maybeNewFish.map(fish => Bag(fish -> count)) getOrElse Bag.empty
-        evolvedFishBag ++ newFishBag
-      }
-    FastFishState(newFishCounts)
+  def evolve = FastFishState(fishCounts bagFlatMap spawn)
+
+  private def spawn(fish: Fish, count: Long): Bag[Fish] =
+    val (evolvedFish, maybeNewFish) = fish.evolve
+    val evolvedFishBag              = Bag(evolvedFish -> count)
+    val newFishBag                  = maybeNewFish.map(fish => Bag(fish -> count)) getOrElse Bag.empty
+    evolvedFishBag ++ newFishBag
 
   def size: Long = fishCounts.size
 
