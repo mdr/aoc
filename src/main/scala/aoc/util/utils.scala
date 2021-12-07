@@ -44,6 +44,9 @@ extension [A](items: Iterable[A])
   def counts: Map[A, Int] = items.groupMapReduce(identity)(_ => 1)(_ + _)
   def countsLong: Map[A, Long] = items.groupMapReduce(identity)(_ => 1L)(_ + _)
 
+extension (items: Iterable[Int])
+  def mean: Double = items.sum / items.size
+
 @tailrec
 def iterate[T](value: T, times: Int)(f: T => T): T =
   if (times == 0) value else iterate(f(value), times - 1)(f)
@@ -83,3 +86,6 @@ def getIntLines(s: String): Seq[Int] = getLines(s).map(_.trim.toInt)
 extension [K, V](map: Map[K, V])
   def mergeWith(that: Map[K, V])(f: (V, V) => V): Map[K, V] =
     (map.toSeq ++ that.toSeq).groupMapReduce(_._1)(_._2)(f)
+
+def triangularNumber(n: Int): Int = n * (n + 1) / 2
+
