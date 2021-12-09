@@ -41,11 +41,12 @@ extension [A](items: IterableOnce[A])
     result
 
 extension [A](items: Iterable[A])
-  def counts: Map[A, Int] = items.groupMapReduce(identity)(_ => 1)(_ + _)
+  def counts: Map[A, Int]      = items.groupMapReduce(identity)(_ => 1)(_ + _)
   def countsLong: Map[A, Long] = items.groupMapReduce(identity)(_ => 1L)(_ + _)
 
-extension (items: Iterable[Int])
-  def mean: Double = items.sum / items.size
+extension (items: Iterable[Int]) def mean: Double = items.sum / items.size
+
+extension [K, V](map: Map[K, V]) def invert: Map[V, Seq[K]] = map.groupMapReduce(_._2)(p => Seq(p._1))(_ ++ _)
 
 @tailrec
 def iterate[T](value: T, times: Int)(f: T => T): T =
@@ -88,4 +89,3 @@ extension [K, V](map: Map[K, V])
     (map.toSeq ++ that.toSeq).groupMapReduce(_._1)(_._2)(f)
 
 def triangularNumber(n: Int): Int = n * (n + 1) / 2
-

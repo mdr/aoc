@@ -66,86 +66,74 @@ val AllWires: Seq[Char] = "abcdefg".toSeq
 
 object SolveState {
 
-  val Initial = SolveState(AllWires.map(wire => wire -> AllWires.toSet).toMap)
+  def initial(entry: Entry) =
+    val wireSolveState = OneToOneSolveState(AllWires.map(wire => wire -> AllWires.toSet).toMap)
+    val digitSolveState = OneToOneSolveState(
+      StandardWiring.map(digit => digit.toSet -> entry.signalPatterns.map(_.wires.toSet).toSet).toMap
+    )
+    SolveState(wireSolveState, digitSolveState)
 
 }
 
-case class SolveState(signalWireToSegmentOptions: Map[Char, Set[Char]]):
+case class SolveState(
+    wireSolveState: OneToOneSolveState[Char, Char],
+    digitSolveState: OneToOneSolveState[Set[Char], Set[Char]]
+):
 
-  def isInconsistent: Boolean =
-    val definites = signalWireToSegmentOptions.toSeq.collect {
-      case (wire, options) if options.size == 1 => options.head -> wire
-    }
-    val xyz = definites.groupBy(_._1)
-    signalWireToSegmentOptions.values.exists(_.isEmpty) ||
-    definites.toSeq.groupBy(_._1).exists(_._2.size > 1)
-
-  override def toString: String =
-    AllWires.map(wire => s"$wire: ${signalWireToSegmentOptions(wire).toSeq.sorted.mkString}").mkString(", ")
-
-  def pruneOnLengths(signalPatterns: Seq[SignalPattern]): SolveState =
-    EasyLengths.foldLeft(this) { case (state, length) => state.pruneOnLength(signalPatterns, length) }
-
-  private def pruneOnLength(signalPatterns: Seq[SignalPattern], easyLength: Int): SolveState =
-    val segmentOptions = StandardWiring.find(_.length == easyLength).get.toSet
-    val wires          = signalPatterns.find(_.length == easyLength).toSeq.flatMap(_.chars)
-    wires.foldLeft(this) { case (state, wire) => state.restrict(wire, segmentOptions) }
-
-  def restrict(wire: Char, options: Set[Char]): SolveState =
-    val newOptions = signalWireToSegmentOptions(wire) intersect options
-    SolveState(signalWireToSegmentOptions + (wire -> newOptions))
-
-  def solve: Option[Map[Char, Char]] =
-    println(s"solve $this")
-    if isInconsistent then None
-    else getSolution orElse startGuessing
-
-  private def startGuessing: Option[Map[Char, Char]] =
-    println(s"startGuessing $this")
-    val solutions =
-      for {
-        (wire, options) <- signalWireToSegmentOptions.to(LazyList)
-        if options.size > 1
-        option <- options
-        updatedState = guess(wire, option)
-        solution <- updatedState.solve
-      } yield solution
-    solutions.headOption
-
-  private def guess(signalWire: Char, segment: Char): SolveState =
-    val state = SolveState(signalWireToSegmentOptions.map { case (wire, options) =>
-      wire -> (if wire == signalWire then Set(segment) else options - segment)
+  def constrainDigitsByLength: SolveState =
+    val newDigitSolveState = OneToOneSolveState(digitSolveState.options.map { case (digit, options) =>
+      digit -> options.filter(_.size == digit.size)
     })
-    println(s"Guessing $signalWire is $segment:")
-    println(this)
-    println(state)
-    state
+    copy(digitSolveState = newDigitSolveState)
 
-  private def getSolution: Option[Map[Char, Char]] =
-    if signalWireToSegmentOptions.values.forall(_.size == 1) then
-      println(s"Found solution in state: $this")
-      val solution = signalWireToSegmentOptions.map { case (wire, options) => wire -> options.head }.toMap
-      println(solution)
-      println(s"isInconsistent = $isInconsistent")
-      val definites = signalWireToSegmentOptions.toSeq.collect {
-        case (wire, options) if options.size == 1 => options.head -> wire
-      }
-      val xyz = definites.toSeq.groupBy(_._1)
-      println(definites)
-      println(xyz)
-      Some(solution)
-    else None
+  def propagateDigitOptionsToWires: SolveState =
+    digitSolveState.options.foldLeft(this) { case (state, (digit, digitOptions)) =>
+      state.propagateDigitOptionsToWires(digit, digitOptions)
+    }
+
+  def propagateDigitOptionsToWires(digit: Set[Char], digitOptions: Set[Set[Char]]): SolveState =
+    val possibleChars = digitOptions.flatten
+    val newWireSolveState =
+      digit.foldLeft(wireSolveState) { case (state, wire) => state.constrainToBeOneOf(wire, possibleChars) }
+    copy(wireSolveState = newWireSolveState)
+
+  def applyAllDifferentConstraint: SolveState =
+    copy(
+      wireSolveState = wireSolveState.applyAllDifferentConstraint,
+      digitSolveState = digitSolveState.applyAllDifferentConstraint
+    )
+
+  def applyDigitSubsetConstraints: SolveState =
+    digitSolveState.determined.toSeq.foldLeft(this) { case (state, (digit, option)) =>
+      state.applyDigitSubsetConstraints(digit, option)
+    }
+
+  def applyDigitSubsetConstraints(digit: Set[Char], option: Set[Char]): SolveState =
+    val newDigitSolveState = OneToOneSolveState(digitSolveState.options.map { case (d, options) =>
+      d -> (if digit subsetOf d then options.filter(option.subsetOf) else options)
+    })
+    copy(digitSolveState = newDigitSolveState)
+
+  override def toString: String = 
+      val wss = wireSolveState.options.keys.toSeq.sorted.map(a => s"$a: ${wireSolveState.options(a).toSeq.sorted.mkString("")}").mkString(", ")
+      val dss = digitSolveState.options.keys.toSeq.sorted.map(a => s"${a.mkString}: [${digitSolveState.options(a).toSeq.map(_.mkString).sorted.mkString(", ")}]").mkString(", ")        
+      s"SolveState:\n  ${wss}\n  ${dss}"
 
 case class OneToOneSolveState[A, B](options: Map[A, Set[B]]):
 
   def isInconsistent: Boolean = options.values.exists(_.isEmpty)
 
+  def determined: Map[A, B] = options.collect { case (a, bs) if bs.size == 1 => a -> bs.head }
+
   def applyAllDifferentConstraint: OneToOneSolveState[A, B] =
-    val determined: Map[A, B] = options.collect { case (a, bs) if bs.size == 1 => a -> bs.head }
-    val determinedBs: Set[B]  = determined.values.toSet
+    options.invert.toSeq
+      .collect { case (bs, as) if as.size == bs.size => as.toSet -> bs }
+      .foldLeft(this) { case (state, (as, bs)) => state.knockout(as, bs) }
+
+  private def knockout(exceptAs: Set[A], bsToKnockOut: Set[B]): OneToOneSolveState[A, B] =
     val newOptions =
       options.map { case (a, bs) =>
-        val newBs = if determined contains a then bs else bs diff determinedBs
+        val newBs = if exceptAs contains a then bs else bs diff bsToKnockOut
         a -> newBs
       }
     OneToOneSolveState(newOptions)
@@ -157,5 +145,5 @@ case class OneToOneSolveState[A, B](options: Map[A, Set[B]]):
     OneToOneSolveState[A, B](options + (a -> bs))
 
   override def toString: String =
-    def renderOptions(a: A): String = options(a).mkString(", ")
-    options.keys.map(a => s"$a: [${renderOptions(a)}]").mkString(",")
+    def renderOptions(a: A) = options(a).mkString(", ")
+    options.keys.map(a => s"$a: [${renderOptions(a)}]").mkString(", ")

@@ -5,6 +5,22 @@ import aoc.UnitTest
 
 class Day08Spec extends UnitTest:
 
+  "thingy2" should "work" in {
+    val state = OneToOneSolveState(Map("a" -> Set(1, 2), "b" -> Set(2), "c" -> Set(3), "d" -> Set(2, 3, 4)))
+    state.applyAllDifferentConstraint shouldEqual OneToOneSolveState(
+      Map("a" -> Set(1), "b" -> Set(2), "c" -> Set(3), "d" -> Set(4))
+    )
+    val entry = EntryParser("acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
+    println(SolveState.initial(entry))
+    println(SolveState.initial(entry).constrainDigitsByLength)
+    println(SolveState.initial(entry).constrainDigitsByLength.propagateDigitOptionsToWires)
+    println(SolveState.initial(entry).constrainDigitsByLength.propagateDigitOptionsToWires.applyAllDifferentConstraint)
+    println(SolveState.initial(entry).constrainDigitsByLength.propagateDigitOptionsToWires.applyAllDifferentConstraint.applyDigitSubsetConstraints("bcdf".toSet, "eafb".toSet))
+    println(SolveState.initial(entry).constrainDigitsByLength.propagateDigitOptionsToWires.applyAllDifferentConstraint.applyDigitSubsetConstraints)
+    println(SolveState.initial(entry).constrainDigitsByLength.propagateDigitOptionsToWires.applyAllDifferentConstraint.applyDigitSubsetConstraints.applyAllDifferentConstraint.propagateDigitOptionsToWires.applyAllDifferentConstraint)
+
+  }
+
   "Example" should "work" in {
     val example =
       """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
@@ -40,11 +56,4 @@ class Day08Spec extends UnitTest:
   "Solution to part 2" should "be correct" ignore {
 
     day08Part2 shouldEqual 1043101
-  }
-
-  "thingy2" should "work" in {
-    val state = OneToOneSolveState(Map("a" -> Set(1, 2), "b" -> Set(2), "c" -> Set(3), "d" -> Set(2, 3, 4)))
-    state.applyAllDifferentConstraint shouldEqual OneToOneSolveState(
-      Map("a" -> Set(1), "b" -> Set(2), "c" -> Set(3), "d" -> Set(4))
-    )
   }
