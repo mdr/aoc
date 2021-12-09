@@ -57,7 +57,7 @@ case class HeightMap(heights: Seq[Seq[Int]]):
           boundaryPoint <- boundary
           neighbour <- neighbours(boundaryPoint)
           if !points.contains(neighbour)
-          if heightAt(neighbour) >= heightAt(boundaryPoint)
+          if heightAt(neighbour) > heightAt(boundaryPoint)
           if heightAt(neighbour) != 9
         yield neighbour
       copy(points = points ++ newBoundary, boundary = newBoundary)
