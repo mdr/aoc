@@ -17,29 +17,29 @@ case class HeightMap(heights: Seq[Seq[Int]]):
 
   def solvePart2 = basins.map(_.size).sorted.takeRight(3).product
 
-  def width  = heights(0).size
-  def height = heights.size
-
-  def getHeight(point: Point): Int = heights(point.y.toInt)(point.x.toInt)
+  def heightAt(point: Point): Int = heights(point.y.toInt)(point.x.toInt)
 
   def isInBounds(point: Point): Boolean =
-    0 <= point.x && point.x < width && 0 <= point.y && point.y < height
+    0 <= point.x && point.x < mapWidth && 0 <= point.y && point.y < mapHeight
 
   def neighbours(point: Point): Seq[Point] =
     Direction.values.map(point + _).filter(isInBounds)
 
   def isLowPoint(point: Point): Boolean =
-    neighbours(point).map(getHeight).forall(getHeight(point) < _)
+    neighbours(point).map(heightAt).forall(heightAt(point) < _)
 
-  def riskLevel(point: Point) = 1 + getHeight(point)
+  def lowPoints: Seq[Point] = allPoints.filter(isLowPoint)
 
-  def lowPoints: Seq[Point] =
+  def riskLevel(point: Point) = 1 + heightAt(point)
+
+  private val mapWidth  = heights(0).size
+  private val mapHeight = heights.size
+
+  def allPoints: Seq[Point] =
     for
-      x <- 0 until width
-      y <- 0 until height
-      point = Point(x, y)
-      if isLowPoint(point)
-    yield point
+      x <- 0 until mapWidth
+      y <- 0 until mapHeight
+    yield Point(x, y)
 
   def basins: Seq[Basin] = lowPoints.map(discoverBasin)
 
@@ -55,11 +55,10 @@ case class HeightMap(heights: Seq[Seq[Int]]):
       val newBoundary =
         for
           boundaryPoint <- boundary
-          boundaryPointHeight = getHeight(boundaryPoint)
           neighbour <- neighbours(boundaryPoint)
           if !points.contains(neighbour)
-          if getHeight(neighbour) >= getHeight(boundaryPoint)
-          if getHeight(neighbour) != 9
+          if heightAt(neighbour) >= heightAt(boundaryPoint)
+          if heightAt(neighbour) != 9
         yield neighbour
       copy(points = points ++ newBoundary, boundary = newBoundary)
 
@@ -71,7 +70,7 @@ case class HeightMap(heights: Seq[Seq[Int]]):
     def renderRow(y: Int): String =
       heights(y).zipWithIndex.map { (height, x) =>
         val point       = Point(x, y)
-        val pointHeight = getHeight(point)
+        val pointHeight = heightAt(point)
         if toHighlight contains point then whiteCircled(pointHeight) else blackCircled(pointHeight)
       }.mkString
-    (0 until height).map(renderRow).mkString("\n")
+    (0 until mapHeight).map(renderRow).mkString("\n")
