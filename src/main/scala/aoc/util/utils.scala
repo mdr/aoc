@@ -54,10 +54,17 @@ def iterate[T](value: T, times: Int)(f: T => T): T =
 
 extension [A](f: A => A) def iterate(times: Int): A => A = a => aoc.util.iterate(a, times)(f)
 
+extension [A, B](pair: (A, B)) def flip: (B, A) = pair._2 -> pair._1
+
 @tailrec
 def iterateUntilSteadyState[T](current: T)(f: T => T): T =
   val next = f(current)
   if (next == current) current else iterateUntilSteadyState(next)(f)
+
+@tailrec
+def iterateUntil[T](current: T, predicate: T => Boolean)(f: T => T): T =
+  if predicate(current) then current
+  else iterateUntil(f(current), predicate)(f)
 
 def uninterleave[T](items: Seq[T]): (Seq[T], Seq[T]) =
   val items1 = new ArrayBuffer[T]()
