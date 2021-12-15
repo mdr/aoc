@@ -96,3 +96,12 @@ extension [K, V](map: Map[K, V])
     (map.toSeq ++ that.toSeq).groupMapReduce(_._1)(_._2)(f)
 
 def triangularNumber(n: Int): Int = n * (n + 1) / 2
+
+def time[T](s: String)(f: => T) =
+  val start = System.currentTimeMillis
+  try {
+    f
+  } finally {
+    val finish = System.currentTimeMillis
+    println(s"$s - ${finish - start}ms")
+  }
