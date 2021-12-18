@@ -18,6 +18,11 @@ extension [T](items: Seq[T])
     if items.size == 1 then items(0)
     else throw new AssertionError(s"Expecting exactly 1 element, but were ${items.size}: $items")
 
+  def indexOfOption(item: T): Option[Int] =
+    items.indexOf(item) match
+      case -1 => None
+      case n  => Some(n)
+
 extension [T](xs: Seq[Seq[T]])
   def sequence: Seq[Seq[T]] =
     xs match

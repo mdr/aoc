@@ -19,10 +19,10 @@ object CaveSystem:
         .groupMapReduce(_._1) { case (_, cave) => Seq(cave) }(_ ++ _)
     CaveSystem(adjacency)
 
-object Path:
-  def Initial = Path(Seq(Cave.Start))
+object CavePath:
+  def Initial = CavePath(Seq(Cave.Start))
 
-case class Path(caves: Seq[Cave]):
+case class CavePath(caves: Seq[Cave]):
   def currentCave: Cave = caves.last
 
   def hasRevisitedSmallCave: Boolean = caves.filter(_.isSmall).counts.values.exists(_ > 1)
@@ -38,9 +38,9 @@ case class Path(caves: Seq[Cave]):
     (cave.isBig ||
       cave.isSmall && !(caves.contains(cave) && hasRevisitedSmallCave) && cave != Cave.Start)
 
-  def visit(cave: Cave): Path = copy(caves = caves :+ cave)
+  def visit(cave: Cave): CavePath = copy(caves = caves :+ cave)
 
-  def maybeVisit(mode: Mode)(cave: Cave): Option[Path] =
+  def maybeVisit(mode: Mode)(cave: Cave): Option[CavePath] =
     if canVisit(mode)(cave) then Some(visit(cave)) else None
 
   def isComplete: Boolean = currentCave == Cave.End
@@ -52,7 +52,7 @@ enum Mode:
 
 case class CaveSystem(adjacency: Map[Cave, Seq[Cave]]):
 
-  def spelunk(mode: Mode)(path: Path = Path.Initial): Seq[Path] =
+  def spelunk(mode: Mode)(path: CavePath = CavePath.Initial): Seq[CavePath] =
     if path.isComplete then Seq(path)
     else
       getAdjacentCaves(path.currentCave)

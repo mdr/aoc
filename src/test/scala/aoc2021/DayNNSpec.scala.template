@@ -5,6 +5,10 @@ import aoc.UnitTest
 
 class DayNNSpec extends UnitTest:
 
+  "Example" should "work" in {
+    val example = """ """
+  }
+
   "Solution to part 1" should "be correct" ignore {
     dayNNPart1 shouldEqual -1
   }

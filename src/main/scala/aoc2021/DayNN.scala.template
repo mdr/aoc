@@ -2,6 +2,8 @@ package aoc2021
 
 import aoc.util.*
 
-def dayNNPart1: Int = loadString("aoc2021/input-2021-?N.txt").length
+val data = loadString("aoc2021/input-2021-?N.txt")
 
-def dayNNPart2: Int = loadString("aoc2021/input-2021-?N.txt").length
+def dayNNPart1: Int = ???
+
+def dayNNPart2: Int = ???
