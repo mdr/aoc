@@ -1,5 +1,5 @@
 import aoc2025.day02.*
-import aoc2025.readInput
+import aoc2025.utils.readInput
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 

@@ -1,6 +1,6 @@
 package aoc2025.day01
 
-import aoc2025.readInput
+import aoc2025.utils.readInput
 
 sealed trait Rotation:
   def value: Int

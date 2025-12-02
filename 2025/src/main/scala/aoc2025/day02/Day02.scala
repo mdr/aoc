@@ -1,7 +1,6 @@
 package aoc2025.day02
 
-import aoc2025.readInput
-import aoc2025.utils.sumBy
+import aoc2025.utils.{readInput, sumBy, sumWhere}
 
 import scala.util.matching.Regex
 
@@ -12,7 +11,7 @@ enum Invalidity(val regex: Regex):
   def isInvalidId(n: Long): Boolean = regex.matches(n.toString)
 
 case class Range(start: Long, end: Long):
-  def sumInvalid(invalidity: Invalidity): Long = (start to end).filter(invalidity.isInvalidId).sum
+  def sumInvalid(invalidity: Invalidity): Long = (start to end).sumWhere(invalidity.isInvalidId)
 
 object Range:
   private def parseRange(input: String): Range =
@@ -20,7 +19,7 @@ object Range:
       case Array(a, b) => Range(a.toLong, b.toLong)
 
   def parseRanges(input: String): Seq[Range] =
-    input.split(",").map(Range.parseRange).toSeq
+    input.split(",").map(Range.parseRange)
 
 def sumOfInvalidIds(ranges: Seq[Range], invalidity: Invalidity): Long =
   ranges.sumBy(_.sumInvalid(invalidity))

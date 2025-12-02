@@ -1,4 +1,4 @@
-package aoc2025
+package aoc2025.utils
 
 import scala.io.Source
 
