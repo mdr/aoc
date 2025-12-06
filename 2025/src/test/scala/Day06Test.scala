@@ -12,18 +12,6 @@ class Day06Test extends AnyFunSpec with Matchers {
       |*   +   *   +""".stripMargin
   lazy val puzzleInput: String = readInput("day06/input.txt")
 
-  describe("PuzzleInput.parse") {
-    it("should parse number rows and operators") {
-      val parsed = PuzzleInput1.parse(exampleInput)
-      parsed.numberRows shouldBe Seq(
-        Seq(123, 328, 51, 64),
-        Seq(45, 64, 387, 23),
-        Seq(6, 98, 215, 314)
-      )
-      parsed.operators shouldBe Seq(Operator.Multiply, Operator.Add, Operator.Multiply, Operator.Add)
-    }
-  }
-
   describe("Problem.parse") {
     it("should parse problem 1: 4, 431, 623 with Add") {
       Problem.parse("4\n431\n623+") shouldBe Problem(Seq(4, 431, 623), Operator.Add)
@@ -41,19 +29,19 @@ class Day06Test extends AnyFunSpec with Matchers {
 
   describe("solvePart1") {
     it("should work on example input") {
-      solvePart1(PuzzleInput1.parse(exampleInput)) shouldBe 4277556L
+      Worksheet.parseForPart1(exampleInput).solve shouldBe 4277556L
     }
     it("should work on puzzle input") {
-      solvePart1(PuzzleInput1.parse(puzzleInput)) shouldBe 4722948564882L
+      Worksheet.parseForPart1(puzzleInput).solve shouldBe 4722948564882L
     }
   }
 
   describe("solvePart2") {
     it("should work on example input") {
-      solvePart2(PuzzleInput2.parse(exampleInput)) shouldBe 3263827L
+      Worksheet.parseForPart2(exampleInput).solve shouldBe 3263827L
     }
     it("should work on puzzle input") {
-      solvePart2(PuzzleInput2.parse(puzzleInput)) shouldBe 9581313737063L
+      Worksheet.parseForPart2(puzzleInput).solve shouldBe 9581313737063L
     }
   }
 
