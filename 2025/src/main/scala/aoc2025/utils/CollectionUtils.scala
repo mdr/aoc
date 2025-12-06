@@ -17,3 +17,9 @@ extension[A: Numeric](xs: Iterable[A])
 
 def iterateUntilStable[T](initial: T)(f: T => T): T =
   Iterator.iterate(initial)(f).sliding(2).find { case Seq(a, b) => a == b }.map(_.head).get
+
+def crossProduct[A, B](as: Set[A], bs: Set[B]): Set[(A, B)] =
+  for
+    a <- as
+    b <- bs
+  yield (a, b)

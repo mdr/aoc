@@ -1,14 +1,10 @@
 package aoc2025.day04
 
-import aoc2025.utils.{iterateUntilStable, readInput}
+import aoc2025.utils.{crossProduct, iterateUntilStable, readInput}
 
 case class Point(row: Int, column: Int):
   def adjacent8: Set[Point] =
-    for
-      dr <- (-1 to 1).toSet
-      dc <- -1 to 1
-      if dr != 0 || dc != 0
-    yield Point(row + dr, column + dc)
+    crossProduct((-1 to 1).toSet, (-1 to 1).toSet).map((dr, dc) => Point(row + dr, column + dc)) - this
 
 case class PaperGrid(paperRolls: Set[Point]):
 
