@@ -29,4 +29,19 @@ class StringUtilsTest extends AnyFunSpec with Matchers {
     }
   }
 
+  describe("transposeBlock") {
+    it("should transpose a simple block") {
+      "ab\ncd".transposeBlock shouldBe Seq("ac", "bd")
+    }
+    it("should pad shorter lines with spaces") {
+      "ab\nc".transposeBlock shouldBe Seq("ac", "b ")
+    }
+    it("should handle single column") {
+      "a\nb\nc".transposeBlock shouldBe Seq("abc")
+    }
+    it("should handle single row") {
+      "abc".transposeBlock shouldBe Seq("a", "b", "c")
+    }
+  }
+
 }
