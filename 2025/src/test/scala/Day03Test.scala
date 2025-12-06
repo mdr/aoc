@@ -47,19 +47,19 @@ class Day03Test extends AnyFunSpec with Matchers {
 
   describe("solvePart1") {
     it("should work on example input") {
-      solvePart1(exampleBanks) shouldBe 357
+      solvePart1(exampleBanks) shouldBe Joltage(357)
     }
     it("should work on puzzle input") {
-      solvePart1(puzzleBanks) shouldBe 17263
+      solvePart1(puzzleBanks) shouldBe Joltage(17263)
     }
   }
 
   describe("solvePart2") {
     it("should work on example input") {
-      solvePart2(exampleBanks) shouldBe 3121910778619L
+      solvePart2(exampleBanks) shouldBe Joltage(3121910778619L)
     }
     it("should work on puzzle input") {
-      solvePart2(puzzleBanks) shouldBe 170731717900423L
+      solvePart2(puzzleBanks) shouldBe Joltage(170731717900423L)
     }
   }
 
