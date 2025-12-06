@@ -45,24 +45,6 @@ class Day03Test extends AnyFunSpec with Matchers {
     }
   }
 
-  describe("orderedItemPairs") {
-    it("should return all unique pairs where second index is greater than first") {
-      orderedItemPairs(Seq(1, 2, 3)) shouldBe Seq((1, 2), (1, 3), (2, 3))
-    }
-
-    it("should return empty for empty sequence") {
-      orderedItemPairs(Seq.empty[Int]) shouldBe Seq.empty
-    }
-
-    it("should return empty for single-element sequence") {
-      orderedItemPairs(Seq(1)) shouldBe Seq.empty
-    }
-
-    it("should return single pair for two-element sequence") {
-      orderedItemPairs(Seq("a", "b")) shouldBe Seq(("a", "b"))
-    }
-  }
-
   describe("solvePart1") {
     it("should work on example input") {
       solvePart1(exampleBanks) shouldBe 357
@@ -78,30 +60,6 @@ class Day03Test extends AnyFunSpec with Matchers {
     }
     it("should work on puzzle input") {
       solvePart2(puzzleBanks) shouldBe 170731717900423L
-    }
-  }
-
-  describe("allSubsequencesOfLength") {
-    it("should return all subsequences of length 2") {
-      allSubsequencesOfLength(Seq(1, 2, 3), 2) shouldBe Seq(Seq(1, 2), Seq(1, 3), Seq(2, 3))
-    }
-
-    it("should return all subsequences of length 3") {
-      allSubsequencesOfLength(Seq(1, 2, 3, 4), 3) shouldBe Seq(
-        Seq(1, 2, 3), Seq(1, 2, 4), Seq(1, 3, 4), Seq(2, 3, 4)
-      )
-    }
-
-    it("should return single empty subsequence for length 0") {
-      allSubsequencesOfLength(Seq(1, 2, 3), 0) shouldBe Seq(Seq.empty)
-    }
-
-    it("should return empty when length exceeds sequence size") {
-      allSubsequencesOfLength(Seq(1, 2), 3) shouldBe Seq.empty
-    }
-
-    it("should return single subsequence when length equals sequence size") {
-      allSubsequencesOfLength(Seq(1, 2, 3), 3) shouldBe Seq(Seq(1, 2, 3))
     }
   }
 
