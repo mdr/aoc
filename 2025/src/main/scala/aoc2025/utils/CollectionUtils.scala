@@ -14,3 +14,6 @@ extension[A: Numeric](xs: Iterable[A])
   def sumWhere(pred: A => Boolean): A =
     val num = summon[Numeric[A]]
     xs.foldLeft(num.zero)((acc, x) => if pred(x) then num.plus(acc, x) else acc)
+
+def iterateUntilStable[T](initial: T)(f: T => T): T =
+  Iterator.iterate(initial)(f).sliding(2).find { case Seq(a, b) => a == b }.map(_.head).get
