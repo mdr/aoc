@@ -26,22 +26,25 @@ def allSubsequencesOfLength[A](items: Seq[A], length: Int): Seq[Seq[A]] =
 
 case class Bank(batteries: Seq[Long]):
   def largestPossibleJoltagePart1: Long =
-    new JoltageSearch().largestPossibleJoltage(length = 2).getOrElse(0L)
+    new JoltageSearch().largestPossibleJoltage(SubproblemKey(length = 2, fromIndex = 0)).getOrElse(0L)
 
   def largestPossibleJoltagePart2: Long =
-    new JoltageSearch().largestPossibleJoltage(length = 12).getOrElse(0L)
+    new JoltageSearch().largestPossibleJoltage(SubproblemKey(length = 12, fromIndex = 0)).getOrElse(0L)
+
+  private case class SubproblemKey(length: Int, fromIndex: Int)
 
   private class JoltageSearch:
-    private var subproblemResults: Map[(Int, Int), Option[Long]] = Map.empty
+    private var subproblemResults: Map[SubproblemKey, Option[Long]] = Map.empty
 
-    def largestPossibleJoltage(length: Int, fromIndex: Int = 0): Option[Long] =
-      subproblemResults.getOrElse((length, fromIndex), {
-        val result = computeLargestPossibleJoltage(length, fromIndex)
-        subproblemResults = subproblemResults.updated((length, fromIndex), result)
+    def largestPossibleJoltage(key: SubproblemKey): Option[Long] =
+      subproblemResults.getOrElse(key, {
+        val result = computeLargestPossibleJoltage(key)
+        subproblemResults = subproblemResults.updated(key, result)
         result
       })
 
-    private def computeLargestPossibleJoltage(length: Int, fromIndex: Int = 0): Option[Long] =
+    private def computeLargestPossibleJoltage(key: SubproblemKey): Option[Long] =
+      val SubproblemKey(length, fromIndex) = key
       if length == 0 then
         Some(0)
       else if batteries.length - fromIndex < length then
@@ -50,15 +53,14 @@ case class Bank(batteries: Seq[Long]):
         fromIndex.until(batteries.length).flatMap { i =>
           val batteryJoltage = batteries(i)
           val currentDigit = batteryJoltage * math.pow(10, length - 1).toLong
-          largestPossibleJoltage(length - 1, i + 1).map { _ + currentDigit}
+          largestPossibleJoltage(SubproblemKey(length - 1, i + 1)).map { _ + currentDigit}
         }.maxOption
 
 
 object Bank:
   def parseBank(input: String): Bank = Bank(input.map(_.asDigit.toLong))
 
-  def parseBanks(input: String): Seq[Bank] =
-    input.linesIterator.map(_.trim).filter(_.nonEmpty).map(Bank.parseBank).toSeq
+  def parseBanks(input: String): Seq[Bank] = input.linesIterator.map(Bank.parseBank).toSeq
 
 def solvePart1(banks: Seq[Bank]): Long = banks.sumBy(_.largestPossibleJoltagePart1)
 

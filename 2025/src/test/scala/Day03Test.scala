@@ -40,22 +40,6 @@ class Day03Test extends AnyFunSpec with Matchers {
       )
     }
 
-    it("should trim whitespace from lines") {
-      val input = "  123  \n  456  "
-      Bank.parseBanks(input) shouldBe Seq(
-        Bank(Seq(1, 2, 3)),
-        Bank(Seq(4, 5, 6))
-      )
-    }
-
-    it("should filter out empty lines") {
-      val input = "123\n\n456\n\n"
-      Bank.parseBanks(input) shouldBe Seq(
-        Bank(Seq(1, 2, 3)),
-        Bank(Seq(4, 5, 6))
-      )
-    }
-
     it("should handle single bank") {
       Bank.parseBanks("123") shouldBe Seq(Bank(Seq(1, 2, 3)))
     }
@@ -85,6 +69,15 @@ class Day03Test extends AnyFunSpec with Matchers {
     }
     it("should work on puzzle input") {
       solvePart1(puzzleBanks) shouldBe 17263
+    }
+  }
+
+  describe("solvePart2") {
+    it("should work on example input") {
+      solvePart2(exampleBanks) shouldBe 3121910778619L
+    }
+    it("should work on puzzle input") {
+      solvePart2(puzzleBanks) shouldBe 170731717900423L
     }
   }
 
