@@ -1,6 +1,6 @@
 package aoc2025.day06
 
-import aoc2025.utils.{readInput, sumBy}
+import aoc2025.utils.{initAndLast, readInput, splitOnBlankLines, splitOnWhitespace, sumBy, transposeBlock}
 
 enum Operator:
   case Add, Multiply
@@ -17,30 +17,25 @@ case class Problem(numbers: Seq[Long], operator: Operator):
 
 object Problem:
   def parse(input: String): Problem =
-    val trimmed = input.trim
-    val operator = Operator.parse(trimmed.last.toString)
-    val numberStrings = trimmed.init.split("\n").map(_.trim.toLong)
-    Problem(numberStrings, operator)
+    val (init, last) = input.trim.initAndLast
+    val operator = Operator.parse(last.toString)
+    val numbers = init.mkString.split("\n").map(_.trim.toLong)
+    Problem(numbers, operator)
 
 case class Worksheet(problems: Seq[Problem]):
   def solve: Long = problems.sumBy(_.solve)
 
 object Worksheet:
   def parseForPart1(input: String): Worksheet =
-    val lines = input.linesIterator.toSeq
-    val numberLines = lines.init
-    val operatorLine = lines.last
-    val numberRows = numberLines.map(_.trim.split("\\s+").map(_.toLong).toSeq)
-    val operators = operatorLine.trim.split("\\s+").map(Operator.parse).toSeq
+    val (numberLines, operatorLine) = input.linesIterator.toSeq.initAndLast
+    val numberRows = numberLines.map(_.splitOnWhitespace.map(_.toLong))
+    val operators = operatorLine.splitOnWhitespace.map(Operator.parse)
     val columns = numberRows.transpose
     val problems = columns.zip(operators).map { case (numbers, operator) => Problem(numbers, operator) }
     Worksheet(problems)
 
   def parseForPart2(input: String): Worksheet =
-    val lines = input.linesIterator.toSeq
-    val maxLen = lines.map(_.length).max
-    val paddedLines = lines.map(_.padTo(maxLen, ' '))
-    val problems = paddedLines.transpose.reverse.map(_.mkString.trim).mkString("\n").split("\n\n").map(Problem.parse)
+    val problems = input.transposeBlock.reverse.map(_.trim).mkString("\n").splitOnBlankLines.map(Problem.parse)
     Worksheet(problems)
 
 @main def day06(): Unit =

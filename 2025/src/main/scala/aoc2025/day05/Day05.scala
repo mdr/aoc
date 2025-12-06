@@ -1,6 +1,6 @@
 package aoc2025.day05
 
-import aoc2025.utils.{readInput, sumBy}
+import aoc2025.utils.{readInput, splitOnBlankLines, sumBy}
 
 type IngredientId = Long
 
@@ -22,7 +22,7 @@ case class PuzzleInput(ranges: Seq[FreshRange], ingredients: Seq[IngredientId]):
 
 object PuzzleInput:
   def parse(input: String): PuzzleInput =
-    val Array(rangeSection, ingredientsSection) = input.split("\n\n")
+    val Seq(rangeSection, ingredientsSection) = input.splitOnBlankLines
     val ranges = rangeSection.linesIterator.map(FreshRange.parse).toSeq
     val ingredients = ingredientsSection.linesIterator.map(_.toLong).toSeq
     PuzzleInput(ranges, ingredients)
