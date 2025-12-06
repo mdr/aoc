@@ -5,6 +5,20 @@ import org.scalatest.matchers.should.Matchers
 
 class Day04Test extends AnyFunSpec with Matchers {
 
+  describe("Point") {
+    it("should add a delta tuple") {
+      Point(2, 3) + (1, -1) shouldBe Point(3, 2)
+    }
+
+    it("should return 8 adjacent points") {
+      Point(5, 5).adjacent8 shouldBe Set(
+        Point(4, 4), Point(4, 5), Point(4, 6),
+        Point(5, 4),             Point(5, 6),
+        Point(6, 4), Point(6, 5), Point(6, 6)
+      )
+    }
+  }
+
   val exampleInput: String =
     """..@@.@@@@.
       |@@@.@.@.@@
@@ -38,8 +52,7 @@ class Day04Test extends AnyFunSpec with Matchers {
       solvePart1(exampleGrid) shouldBe 13
     }
     it("should work on puzzle input") {
-      pending
-      // solvePart1(puzzleGrid) shouldBe ???
+      solvePart1(puzzleGrid) shouldBe 1397
     }
   }
 
