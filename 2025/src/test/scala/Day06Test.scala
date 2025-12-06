@@ -14,7 +14,7 @@ class Day06Test extends AnyFunSpec with Matchers {
 
   describe("PuzzleInput.parse") {
     it("should parse number rows and operators") {
-      val parsed = PuzzleInput.parse(exampleInput)
+      val parsed = PuzzleInput1.parse(exampleInput)
       parsed.numberRows shouldBe Seq(
         Seq(123, 328, 51, 64),
         Seq(45, 64, 387, 23),
@@ -24,23 +24,36 @@ class Day06Test extends AnyFunSpec with Matchers {
     }
   }
 
+  describe("Problem.parse") {
+    it("should parse problem 1: 4, 431, 623 with Add") {
+      Problem.parse("4\n431\n623+") shouldBe Problem(Seq(4, 431, 623), Operator.Add)
+    }
+    it("should parse problem 2: 175, 581, 32 with Multiply") {
+      Problem.parse("175\n581\n32*") shouldBe Problem(Seq(175, 581, 32), Operator.Multiply)
+    }
+    it("should parse problem 3: 8, 248, 369 with Add") {
+      Problem.parse("8\n248\n369+") shouldBe Problem(Seq(8, 248, 369), Operator.Add)
+    }
+    it("should parse problem 4: 356, 24, 1 with Multiply") {
+      Problem.parse("356\n24\n1  *") shouldBe Problem(Seq(356, 24, 1), Operator.Multiply)
+    }
+  }
+
   describe("solvePart1") {
     it("should work on example input") {
-      solvePart1(PuzzleInput.parse(exampleInput)) shouldBe 4277556L
+      solvePart1(PuzzleInput1.parse(exampleInput)) shouldBe 4277556L
     }
     it("should work on puzzle input") {
-      solvePart1(PuzzleInput.parse(puzzleInput)) shouldBe 4722948564882L
+      solvePart1(PuzzleInput1.parse(puzzleInput)) shouldBe 4722948564882L
     }
   }
 
   describe("solvePart2") {
     it("should work on example input") {
-      pending
-      // solvePart2(PuzzleInput.parse(exampleInput)) shouldBe ???
+      solvePart2(PuzzleInput2.parse(exampleInput)) shouldBe 3263827L
     }
     it("should work on puzzle input") {
-      pending
-      // solvePart2(PuzzleInput.parse(puzzleInput)) shouldBe ???
+      solvePart2(PuzzleInput2.parse(puzzleInput)) shouldBe 9581313737063L
     }
   }
 
