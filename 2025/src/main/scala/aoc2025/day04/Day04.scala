@@ -3,7 +3,7 @@ package aoc2025.day04
 import aoc2025.utils.{crossProduct, iterateUntilStable, readInput}
 
 case class Point(row: Int, column: Int):
-  def +(delta: (Int, Int)): Point = Point(row + delta._1, column + delta._2)
+  def +(delta: Product2[Int, Int]): Point = Point(row + delta._1, column + delta._2)
 
   def adjacent8: Set[Point] =
     crossProduct((-1 to 1).toSet, (-1 to 1).toSet).map(this + _) - this
@@ -22,7 +22,6 @@ object PaperGrid:
       }
     }.toSet
     PaperGrid(points)
-
 
 def solvePart1(grid: PaperGrid) = grid.paperRolls.count(grid.forkliftCanAccess)
 
