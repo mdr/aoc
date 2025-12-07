@@ -1,7 +1,13 @@
 package aoc2025.utils
 
 extension [A](xs: Seq[A])
+  def headAndTail: (A, Seq[A]) = (xs.head, xs.tail)
+
   def initAndLast: (Seq[A], A) = (xs.init, xs.last)
+
+  def everyNth(n: Int): Seq[A] = xs.zipWithIndex.collect { case (x, i) if i % n == 0 => x }
+
+  def indexesOf(elem: A): Seq[Int] = xs.zipWithIndex.collect { case (x, i) if x == elem => i }
 
 extension [A](xs: Iterable[A])
   def sumBy[B](f: A => B)(using num: Numeric[B]): B =

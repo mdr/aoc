@@ -5,12 +5,45 @@ import org.scalatest.matchers.should.Matchers
 
 class CollectionUtilsTest extends AnyFunSpec with Matchers {
 
+  describe("headAndTail") {
+    it("should return head and tail") {
+      Seq(1, 2, 3, 4).headAndTail shouldBe (1, Seq(2, 3, 4))
+    }
+    it("should work with single element") {
+      Seq(42).headAndTail shouldBe (42, Seq.empty)
+    }
+  }
+
   describe("initAndLast") {
     it("should return init and last element") {
       Seq(1, 2, 3, 4).initAndLast shouldBe (Seq(1, 2, 3), 4)
     }
     it("should work with single element") {
       Seq(42).initAndLast shouldBe (Seq.empty, 42)
+    }
+  }
+
+  describe("everyNth") {
+    it("should take every 2nd element") {
+      Seq(0, 1, 2, 3, 4, 5).everyNth(2) shouldBe Seq(0, 2, 4)
+    }
+    it("should take every 3rd element") {
+      Seq(0, 1, 2, 3, 4, 5, 6).everyNth(3) shouldBe Seq(0, 3, 6)
+    }
+    it("should return all elements when n=1") {
+      Seq(1, 2, 3).everyNth(1) shouldBe Seq(1, 2, 3)
+    }
+  }
+
+  describe("indexesOf") {
+    it("should return all indexes of an element") {
+      Seq('a', 'b', 'a', 'c', 'a').indexesOf('a') shouldBe Seq(0, 2, 4)
+    }
+    it("should return empty for missing element") {
+      Seq(1, 2, 3).indexesOf(5) shouldBe Seq.empty
+    }
+    it("should work with strings") {
+      "abracadabra".indexesOf('a') shouldBe Seq(0, 3, 5, 7, 10)
     }
   }
 
