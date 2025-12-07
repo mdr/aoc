@@ -51,12 +51,10 @@ class Day07Test extends AnyFunSpec with Matchers {
 
   describe("solvePart2") {
     it("should work on example input") {
-      pending
-      // solvePart2(PuzzleInput.parse(exampleInput)) shouldBe ???
+      solvePart2(TachyonManifold.parse(exampleInput)) shouldBe 40
     }
     it("should work on puzzle input") {
-      pending
-      // solvePart2(PuzzleInput.parse(puzzleInput)) shouldBe ???
+      solvePart2(TachyonManifold.parse(puzzleInput)) shouldBe 15650261281478L
     }
   }
 
