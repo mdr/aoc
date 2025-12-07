@@ -8,5 +8,7 @@ lazy val root = project
 
     scalaVersion := scala3Version,
 
+    scalacOptions ++= Seq("-experimental", "-deprecation"),
+
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % Test
   )

@@ -19,7 +19,7 @@ object Problem:
   def parse(input: String): Problem =
     val (init, last) = input.trim.initAndLast
     val operator = Operator.parse(last.toString)
-    val numbers = init.mkString.split("\n").map(_.trim.toLong)
+    val numbers = init.mkString.split("\n").toSeq.map(_.trim.toLong)
     Problem(numbers, operator)
 
 case class Worksheet(problems: Seq[Problem]):

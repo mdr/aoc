@@ -19,7 +19,7 @@ object Range:
       case Array(a, b) => Range(a.toLong, b.toLong)
 
   def parseRanges(input: String): Seq[Range] =
-    input.split(",").map(Range.parseRange)
+    input.split(",").toSeq.map(Range.parseRange)
 
 def sumOfInvalidIds(ranges: Seq[Range], invalidity: Invalidity): Long =
   ranges.sumBy(_.sumInvalid(invalidity))

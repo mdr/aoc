@@ -1,27 +1,23 @@
 package aoc2025.day03
 
-import aoc2025.utils.{Memoised, readInput, sumBy}
+import aoc2025.utils.{cached, readInput, sumBy}
 
 case class Bank(batteries: Seq[Long]):
   def largestPossibleJoltagePart1: Joltage =
-    largestPossibleJoltage(SubproblemKey(length = 2)).getOrElse(Joltage.Zero)
+    largestPossibleJoltage(length = 2, fromIndex = 0).getOrElse(Joltage.Zero)
 
   def largestPossibleJoltagePart2: Joltage =
-    largestPossibleJoltage(SubproblemKey(length = 12)).getOrElse(Joltage.Zero)
+    largestPossibleJoltage(length = 12, fromIndex = 0).getOrElse(Joltage.Zero)
 
-  private case class SubproblemKey(length: Int, fromIndex: Int = 0)
-
-  private val largestPossibleJoltage: Memoised[SubproblemKey, Option[Joltage]] =
-    Memoised { (key, recurse) =>
-      val SubproblemKey(length, fromIndex) = key
-      if length == 0 then
-        Some(Joltage.Zero)
-      else
-        fromIndex.until(batteries.length).flatMap { i =>
-          val currentDigit = Joltage(batteries(i)) * math.pow(10, length - 1).toLong
-          recurse(SubproblemKey(length - 1, i + 1)).map(_ + currentDigit)
-        }.maxOption
-    }
+  @cached
+  private def largestPossibleJoltage(length: Int, fromIndex: Int): Option[Joltage] =
+    if length == 0 then
+      Some(Joltage.Zero)
+    else
+      fromIndex.until(batteries.length).flatMap { i =>
+        val currentDigit = Joltage(batteries(i)) * math.pow(10, length - 1).toLong
+        largestPossibleJoltage(length - 1, i + 1).map(_ + currentDigit)
+      }.maxOption
 
 
 object Bank:

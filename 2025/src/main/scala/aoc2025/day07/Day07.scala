@@ -1,6 +1,6 @@
 package aoc2025.day07
 
-import aoc2025.utils.{Memoised, everyNth, headAndTail, indexesOf, readInput}
+import aoc2025.utils.{cached, everyNth, headAndTail, indexesOf, readInput}
 
 case class BeamTrace(positions: Set[Int], splitCount: Int = 0)
 
@@ -16,19 +16,16 @@ case class TachyonManifold(start: Int, splitterRows: Seq[Set[Int]]):
     val initialBeamTrace = BeamTrace(Set(start))
     splitterRows.foldLeft(initialBeamTrace)(propagate)
 
-  def countPaths: Long =
-    case class Subproblem(position: Int, rowIndex: Int)
-    val countPaths_ = Memoised[Subproblem, Long] { case (Subproblem(position, rowIndex), recurse) =>
-      if rowIndex >= splitterRows.length then
-        1
-      else if splitterRows(rowIndex) contains position then
-        val leftPathCount = recurse(Subproblem(position - 1, rowIndex + 1))
-        val rightPathCount = recurse(Subproblem(position + 1, rowIndex + 1))
-        leftPathCount + rightPathCount
-      else
-        recurse(Subproblem(position, rowIndex + 1))
-    }
-    countPaths_(Subproblem(start, 0))
+  @cached
+  private def countPathsFrom(position: Int, rowIndex: Int): Long =
+    if rowIndex >= splitterRows.length then
+      1
+    else if splitterRows(rowIndex) contains position then
+      countPathsFrom(position - 1, rowIndex + 1) + countPathsFrom(position + 1, rowIndex + 1)
+    else
+      countPathsFrom(position, rowIndex + 1)
+
+  def countPaths: Long = countPathsFrom(start, 0)
 
 object TachyonManifold:
   def parse(input: String): TachyonManifold =
