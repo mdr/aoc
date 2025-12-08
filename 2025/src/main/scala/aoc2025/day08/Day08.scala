@@ -53,12 +53,24 @@ case class Playground(allBoxes: Set[Point3D], circuits: Set[Circuit]):
         playground.connectBoxes(box1, box2)
       }
 
+  def firstConnectionToFormSingleCircuit(): (Point3D, Point3D) =
+    Point3D.findClosestPairs(allBoxes).scanLeft(this) { case (playground, (box1, box2)) =>
+      playground.connectBoxes(box1, box2)
+    }.tail.zip(Point3D.findClosestPairs(allBoxes)).collectFirst {
+      case (playground, boxPair) if playground.circuits.size == 1 => boxPair
+    }.getOrElse(
+      throw new IllegalStateException("Could not find a connection that forms a single circuit")
+    )
+
 def solvePart1(boxes: Set[Point3D], numberOfBoxesToConnect: Int) =
   val playground = Playground.initial(boxes)
   val finalPlayground = playground.connect(numberOfBoxesToConnect)
   finalPlayground.score
 
-def solvePart2(input: String): Int = ???
+def solvePart2(boxes: Set[Point3D]): Long =
+  val playground = Playground.initial(boxes)
+  val (box1, box2) = playground.firstConnectionToFormSingleCircuit()
+  box1.x.toLong * box2.x.toLong
 
 object Playground:
   def initial(boxes: Set[Point3D]): Playground =
@@ -67,10 +79,10 @@ object Playground:
 
 @main def day08(): Unit =
   val input = readInput("day08/input.txt")
-
   val boxes = Point3D.parsePoints(input).toSet
+
   val part1 = solvePart1(boxes, numberOfBoxesToConnect = 1000)
   println(s"Part 1: $part1")
 
-  val part2 = solvePart2(input)
+  val part2 = solvePart2(boxes)
   println(s"Part 2: $part2")
