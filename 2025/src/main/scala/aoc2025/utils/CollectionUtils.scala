@@ -32,3 +32,27 @@ def crossProduct[A, B](as: Set[A], bs: Set[B]): Set[(A, B)] =
     a <- as
     b <- bs
   yield (a, b)
+
+enum ContinueOrStop[+Acc, +StopResult]:
+  case Continue(acc: Acc)
+  case Stop(acc: Acc, result: StopResult)
+
+sealed trait FoldUntilResult[+Acc, +StopResult]:
+  def acc: Acc
+  def resultOption: Option[StopResult]
+
+case class ConditionMet[+Acc, +StopResult](acc: Acc, result: StopResult) extends FoldUntilResult[Acc, StopResult]:
+  def resultOption: Option[StopResult] = Some(result)
+
+case class NoMoreElements[+Acc](acc: Acc) extends FoldUntilResult[Acc, Nothing]:
+  def resultOption: Option[Nothing] = None
+
+extension [A](xs: Iterable[A])
+  def foldUntil[Acc, StopResult](initial: Acc)(f: (Acc, A) => ContinueOrStop[Acc, StopResult]): FoldUntilResult[Acc, StopResult] =
+    val iterator = xs.iterator
+    var acc = initial
+    while iterator.hasNext do
+      f(acc, iterator.next()) match
+        case ContinueOrStop.Continue(newAcc)      => acc = newAcc
+        case ContinueOrStop.Stop(newAcc, result)  => return ConditionMet(newAcc, result)
+    NoMoreElements(acc)
