@@ -110,8 +110,8 @@ class Day08Test extends AnyFunSpec with Matchers {
     it("should work on example input") {
       solvePart1(Point3D.parsePoints(exampleInput).toSet, numberOfBoxesToConnect = 10) shouldBe 40
     }
-    ignore("should work on puzzle input") {
-      solvePart1(Point3D.parsePoints(puzzleInput).toSet, numberOfBoxesToConnect = 1000) shouldBe -1
+    it("should work on puzzle input") {
+      solvePart1(Point3D.parsePoints(puzzleInput).toSet, numberOfBoxesToConnect = 1000) shouldBe 42315
     }
   }
 
