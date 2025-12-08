@@ -20,7 +20,7 @@ object Point3D:
   def parsePoints(input: String): Seq[Point3D] =
     input.linesIterator.map(Point3D.parse).toSeq
 
-  def findClosestPairs(points: Set[Point3D]): Seq[(Point3D, Point3D)] =
+  def allPairsSortedByDistance(points: Set[Point3D]): Seq[(Point3D, Point3D)] =
     points.subsets(2).map { pair =>
       val Seq(p1, p2) = pair.toSeq.sorted
       (p1, p2)
@@ -47,13 +47,13 @@ case class Playground(allBoxes: Set[Point3D], circuits: Set[Circuit]):
     this.copy(circuits = newCircuits)
 
   def connect(numberOfBoxesToConnect: Int): Playground =
-    val closestPairs = Point3D.findClosestPairs(allBoxes).take(numberOfBoxesToConnect)
+    val closestPairs = Point3D.allPairsSortedByDistance(allBoxes).take(numberOfBoxesToConnect)
     closestPairs.foldLeft(this) { case (playground, (box1, box2)) =>
       playground.connectBoxes(box1, box2)
     }
 
   def firstConnectionToFormSingleCircuit(): (Point3D, Point3D) =
-    Point3D.findClosestPairs(allBoxes).foldUntil(this)(
+    Point3D.allPairsSortedByDistance(allBoxes).foldUntil(this)(
       combine = { case (playground, (box1, box2)) => playground.connectBoxes(box1, box2) },
       stopWhen = _.circuits.size == 1
     ).stopElementOption.getOrElse(throw new IllegalStateException("Could not find a connection that forms a single circuit"))

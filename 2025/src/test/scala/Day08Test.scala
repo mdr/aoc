@@ -97,7 +97,7 @@ class Day08Test extends AnyFunSpec with Matchers {
   describe("findClosestPairs") {
     it("should return pairs sorted by distance on example input") {
       val points = Point3D.parsePoints(exampleInput).toSet
-      val pairs = Point3D.findClosestPairs(points)
+      val pairs = Point3D.allPairsSortedByDistance(points)
 
       pairs(0) shouldBe (Point3D(162, 817, 812), Point3D(425, 690, 689))
       pairs(1) shouldBe (Point3D(162, 817, 812), Point3D(431, 825, 988))
