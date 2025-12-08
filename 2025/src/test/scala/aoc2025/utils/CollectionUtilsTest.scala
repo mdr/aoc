@@ -62,34 +62,34 @@ class CollectionUtilsTest extends AnyFunSpec with Matchers {
   }
 
   describe("foldUntil") {
-    import ContinueOrStop.*
-
-    it("should fold entire collection when always continuing") {
-      val result = Seq(1, 2, 3, 4).foldUntil(0) { (acc, x) => Continue(acc + x) }
+    it("should fold entire collection when condition never met") {
+      val result = Seq(1, 2, 3, 4).foldUntil(0)(_ + _, _ > 100)
       result shouldBe NoMoreElements(10)
     }
 
-    it("should stop early when Stop is returned") {
-      val result = Seq(1, 2, 3, 4, 5).foldUntil(0) { (acc, x) =>
-        val newAcc = acc + x
-        if newAcc >= 6 then Stop(newAcc, x) else Continue(newAcc)
-      }
+    it("should stop early when condition is met") {
+      val result = Seq(1, 2, 3, 4, 5).foldUntil(0)(_ + _, _ >= 6)
       result shouldBe ConditionMet(6, 3)
     }
 
     it("should return initial value for empty collection") {
-      val result = Seq.empty[Int].foldUntil(42) { (acc, x) => Continue(acc + x) }
+      val result = Seq.empty[Int].foldUntil(42)(_ + _, _ > 100)
       result shouldBe NoMoreElements(42)
     }
 
-    it("should stop on first element if Stop returned immediately") {
-      val result = Seq(1, 2, 3).foldUntil(0) { (acc, x) => Stop(acc, x * 10) }
-      result shouldBe ConditionMet(0, 10)
+    it("should stop on first element if condition met immediately") {
+      val result = Seq(1, 2, 3).foldUntil(0)(_ + _, _ >= 1)
+      result shouldBe ConditionMet(1, 1)
     }
 
     it("should provide access to acc via accessor method") {
-      val result = Seq(1, 2, 3).foldUntil(0) { (acc, x) => Continue(acc + x) }
+      val result = Seq(1, 2, 3).foldUntil(0)(_ + _, _ > 100)
       result.acc shouldBe 6
+    }
+
+    it("should return element that triggered stop via elemOption") {
+      val result = Seq(1, 2, 3, 4, 5).foldUntil(0)(_ + _, _ >= 6)
+      result.elemOption shouldBe Some(3)
     }
   }
 

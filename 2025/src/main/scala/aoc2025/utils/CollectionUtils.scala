@@ -33,26 +33,23 @@ def crossProduct[A, B](as: Set[A], bs: Set[B]): Set[(A, B)] =
     b <- bs
   yield (a, b)
 
-enum ContinueOrStop[+Acc, +StopResult]:
-  case Continue(acc: Acc)
-  case Stop(acc: Acc, result: StopResult)
-
-sealed trait FoldUntilResult[+Acc, +StopResult]:
+sealed trait FoldUntilResult[+Acc, +Elem]:
   def acc: Acc
-  def resultOption: Option[StopResult]
+  def elemOption: Option[Elem]
 
-case class ConditionMet[+Acc, +StopResult](acc: Acc, result: StopResult) extends FoldUntilResult[Acc, StopResult]:
-  def resultOption: Option[StopResult] = Some(result)
+case class ConditionMet[+Acc, +Elem](acc: Acc, elem: Elem) extends FoldUntilResult[Acc, Elem]:
+  def elemOption: Option[Elem] = Some(elem)
 
 case class NoMoreElements[+Acc](acc: Acc) extends FoldUntilResult[Acc, Nothing]:
-  def resultOption: Option[Nothing] = None
+  def elemOption: Option[Nothing] = None
 
 extension [A](xs: Iterable[A])
-  def foldUntil[Acc, StopResult](initial: Acc)(f: (Acc, A) => ContinueOrStop[Acc, StopResult]): FoldUntilResult[Acc, StopResult] =
+  def foldUntil[Acc](initial: Acc)(combine: (Acc, A) => Acc, stopWhen: Acc => Boolean): FoldUntilResult[Acc, A] =
     val iterator = xs.iterator
     var acc = initial
     while iterator.hasNext do
-      f(acc, iterator.next()) match
-        case ContinueOrStop.Continue(newAcc)      => acc = newAcc
-        case ContinueOrStop.Stop(newAcc, result)  => return ConditionMet(newAcc, result)
+      val elem = iterator.next()
+      val newAcc = combine(acc, elem)
+      if stopWhen(newAcc) then return ConditionMet(newAcc, elem)
+      acc = newAcc
     NoMoreElements(acc)

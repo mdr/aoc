@@ -1,7 +1,6 @@
 package aoc2025.day08
 
-import aoc2025.utils.{ContinueOrStop, foldUntil, readInput}
-import ContinueOrStop.*
+import aoc2025.utils.{foldUntil, readInput}
 
 case class Point3D(x: Double, y: Double, z: Double):
   def distanceTo(other: Point3D): Double =
@@ -49,17 +48,15 @@ case class Playground(allBoxes: Set[Point3D], circuits: Set[Circuit]):
 
   def connect(numberOfBoxesToConnect: Int): Playground =
     val closestPairs = Point3D.findClosestPairs(allBoxes).take(numberOfBoxesToConnect)
-    closestPairs
-      .foldLeft(this) { case (playground, (box1, box2)) =>
-        playground.connectBoxes(box1, box2)
-      }
+    closestPairs.foldLeft(this) { case (playground, (box1, box2)) =>
+      playground.connectBoxes(box1, box2)
+    }
 
   def firstConnectionToFormSingleCircuit(): (Point3D, Point3D) =
-    Point3D.findClosestPairs(allBoxes).foldUntil(this) { case (playground, (box1, box2)) =>
-      val newPlayground = playground.connectBoxes(box1, box2)
-      if newPlayground.circuits.size == 1 then Stop(newPlayground, (box1, box2))
-      else Continue(newPlayground)
-    }.resultOption.getOrElse(throw new IllegalStateException("Could not find a connection that forms a single circuit"))
+    Point3D.findClosestPairs(allBoxes).foldUntil(this)(
+      combine = { case (playground, (box1, box2)) => playground.connectBoxes(box1, box2) },
+      stopWhen = _.circuits.size == 1
+    ).elemOption.getOrElse(throw new IllegalStateException("Could not find a connection that forms a single circuit"))
 
 def solvePart1(boxes: Set[Point3D], numberOfBoxesToConnect: Int) =
   val playground = Playground.initial(boxes)
