@@ -89,7 +89,7 @@ class CollectionUtilsTest extends AnyFunSpec with Matchers {
 
     it("should return element that triggered stop via elemOption") {
       val result = Seq(1, 2, 3, 4, 5).foldUntil(0)(_ + _, _ >= 6)
-      result.elemOption shouldBe Some(3)
+      result.stopElementOption shouldBe Some(3)
     }
   }
 

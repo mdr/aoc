@@ -35,13 +35,13 @@ def crossProduct[A, B](as: Set[A], bs: Set[B]): Set[(A, B)] =
 
 sealed trait FoldUntilResult[+Acc, +Elem]:
   def acc: Acc
-  def elemOption: Option[Elem]
+  def stopElementOption: Option[Elem]
 
-case class ConditionMet[+Acc, +Elem](acc: Acc, elem: Elem) extends FoldUntilResult[Acc, Elem]:
-  def elemOption: Option[Elem] = Some(elem)
+case class ConditionMet[+Acc, +Elem](acc: Acc, stopElement: Elem) extends FoldUntilResult[Acc, Elem]:
+  def stopElementOption: Option[Elem] = Some(stopElement)
 
 case class NoMoreElements[+Acc](acc: Acc) extends FoldUntilResult[Acc, Nothing]:
-  def elemOption: Option[Nothing] = None
+  def stopElementOption: Option[Nothing] = None
 
 extension [A](xs: Iterable[A])
   def foldUntil[Acc](initial: Acc)(combine: (Acc, A) => Acc, stopWhen: Acc => Boolean): FoldUntilResult[Acc, A] =

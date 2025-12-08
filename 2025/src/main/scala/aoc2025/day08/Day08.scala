@@ -56,7 +56,7 @@ case class Playground(allBoxes: Set[Point3D], circuits: Set[Circuit]):
     Point3D.findClosestPairs(allBoxes).foldUntil(this)(
       combine = { case (playground, (box1, box2)) => playground.connectBoxes(box1, box2) },
       stopWhen = _.circuits.size == 1
-    ).elemOption.getOrElse(throw new IllegalStateException("Could not find a connection that forms a single circuit"))
+    ).stopElementOption.getOrElse(throw new IllegalStateException("Could not find a connection that forms a single circuit"))
 
 def solvePart1(boxes: Set[Point3D], numberOfBoxesToConnect: Int) =
   val playground = Playground.initial(boxes)
