@@ -6,15 +6,40 @@ import org.scalatest.matchers.should.Matchers
 class Day09Test extends AnyFunSpec with Matchers {
 
   val exampleInput: String =
-    """TODO""".stripMargin
+    """7,1
+      |11,1
+      |11,7
+      |9,7
+      |9,5
+      |2,5
+      |2,3
+      |7,3""".stripMargin
   lazy val puzzleInput: String = readInput("day09/input.txt")
 
-  describe("solvePart1") {
-    ignore("should work on example input") {
-      solvePart1(exampleInput) shouldBe -1
+  describe("Point") {
+    describe("parsePoints") {
+      it("should parse example input") {
+        val points = Point.parsePoints(exampleInput)
+        points shouldBe Seq(
+          Point(7, 1),
+          Point(11, 1),
+          Point(11, 7),
+          Point(9, 7),
+          Point(9, 5),
+          Point(2, 5),
+          Point(2, 3),
+          Point(7, 3)
+        )
+      }
     }
-    ignore("should work on puzzle input") {
-      solvePart1(puzzleInput) shouldBe -1
+  }
+
+  describe("solvePart1") {
+    it("should work on example input") {
+      solvePart1(exampleInput) shouldBe 50
+    }
+    it("should work on puzzle input") {
+      solvePart1(puzzleInput) shouldBe 4756718172L
     }
   }
 

@@ -48,9 +48,7 @@ case class Playground(allBoxes: Set[Point3D], circuits: Set[Circuit]):
 
   def connect(numberOfBoxesToConnect: Int): Playground =
     val closestPairs = Point3D.allPairsSortedByDistance(allBoxes).take(numberOfBoxesToConnect)
-    closestPairs.foldLeft(this) { case (playground, (box1, box2)) =>
-      playground.connectBoxes(box1, box2)
-    }
+    closestPairs.foldLeft(this) { case (playground, (box1, box2)) => playground.connectBoxes(box1, box2) }
 
   def firstConnectionToFormSingleCircuit(): (Point3D, Point3D) =
     Point3D.allPairsSortedByDistance(allBoxes).foldUntil(this)(
