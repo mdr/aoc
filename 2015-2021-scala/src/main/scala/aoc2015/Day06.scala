@@ -20,12 +20,12 @@ object Day06:
   val instructions = loadLines("aoc2015/input-2015-6.txt").map(InstructionParser(_))
 
   def calculateLightState(point: Point): Boolean = instructions.foldLeft(false) { case (light, instruction) =>
-    if instruction.rectangle contains point then instruction.instructionType(light)
+    if instruction.rectangle.contains(point) then instruction.instructionType(light)
     else light
   }
 
   def calculateBrightness(point: Point): Int = instructions.foldLeft(0) { case (brightness, instruction) =>
-    if instruction.rectangle contains point then instruction.instructionType.modifyBrightness(brightness)
+    if instruction.rectangle.contains(point) then instruction.instructionType.modifyBrightness(brightness)
     else brightness
   }
 

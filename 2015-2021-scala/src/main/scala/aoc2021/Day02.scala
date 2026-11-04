@@ -15,7 +15,7 @@ def calculatePart1(instructions: Seq[SubInstruction]): Long =
 def day02Part2: Long = calculatePart2(instructions)
 
 def calculatePart2(instructions: Seq[SubInstruction]): Long =
-  val SubState(Point(horizontal, depth), _) = instructions.foldLeft(SubState.Initial)(_ modify _)
+  val SubState(Point(horizontal, depth), _) = instructions.foldLeft(SubState.Initial)(_.modify(_))
   horizontal * depth
 
 sealed trait SubInstruction {

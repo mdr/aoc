@@ -34,7 +34,7 @@ case class Day14PuzzleInput(template: PolymerTemplate, rules: Map[String, String
 case class PolymerTemplate(elements: String):
 
   def apply(rules: Map[String, String]): PolymerTemplate =
-    PolymerTemplate(elements.sliding(2).flatMap(s => s.head + rules.getOrElse(s, "")).mkString + elements.last)
+    PolymerTemplate(elements.sliding(2).flatMap(s => s.head.toString + rules.getOrElse(s, "")).mkString + elements.last)
 
 case class PolymerElementCounts(counts: Bag[String]):
 
@@ -42,7 +42,7 @@ case class PolymerElementCounts(counts: Bag[String]):
     val countAdjustments =
       counts.bagFlatMap { case (pair, count) =>
         rules.get(pair) match
-          case Some(insert) => Bag(pair -> -count, pair(0) + insert -> count, insert + pair(1) -> count)
+          case Some(insert) => Bag(pair -> -count, pair(0).toString + insert -> count, insert + pair(1) -> count)
           case None         => Bag(pair -> count)
       }
     PolymerElementCounts(counts ++ countAdjustments)

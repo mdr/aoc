@@ -10,7 +10,7 @@ def containsAtLeastThreeVowels(s: String): Boolean = s.count(isVowel) >= 3
 
 def letterAppearsTwiceInARow(s: String): Boolean = s.matches(".*([a-z])\\1.*")
 
-def containsForbiddenString(s: String): Boolean = (s contains "ab") || (s contains "cd") || (s contains "pq") || (s contains "xy")
+def containsForbiddenString(s: String): Boolean = s.contains("ab") || s.contains("cd") || s.contains("pq") || s.contains("xy")
 
 def isNice(s: String): Boolean = containsAtLeastThreeVowels(s) && letterAppearsTwiceInARow(s) && !containsForbiddenString(s)
 

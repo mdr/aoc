@@ -11,7 +11,7 @@ class PriorityQueue[A] private (private val elems: TreeMap[A, List[A]], val size
   def enqueue(elem: A): PriorityQueue[A] =
     new PriorityQueue(elems.updated(elem, elem :: elems.getOrElse(elem, Nil)), size + 1)
 
-  def enqueue(elems: IterableOnce[A]): PriorityQueue[A] = elems.iterator.foldLeft(this)(_ enqueue _)
+  def enqueue(elems: IterableOnce[A]): PriorityQueue[A] = elems.iterator.foldLeft(this)(_.enqueue(_))
 
   def isEmpty: Boolean = size == 0
 

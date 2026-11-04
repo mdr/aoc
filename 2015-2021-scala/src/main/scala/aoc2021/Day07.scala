@@ -8,7 +8,7 @@ def day07Part1: Int = crabs.optimise(FuelCost.Constant).fuel
 def day07Part2: Int = crabs.optimise(FuelCost.Increasing).fuel
 
 object Crabs:
-  def parse(s: String) = Crabs(s.trim.split(",").map(_.toInt))
+  def parse(s: String) = Crabs(s.trim.split(",").map(_.toInt).toSeq)
 
 case class PositionAndFuel(position: Int, fuel: Int)
 

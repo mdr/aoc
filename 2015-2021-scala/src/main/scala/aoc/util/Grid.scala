@@ -19,6 +19,6 @@ case class Grid[T](values: Map[Point, T], width: Int, height: Int):
   def points: Set[Point] = values.keySet
 
   def orthogonalNeighbours(point: Point): Seq[Point] =
-    Direction.values.map(point + _).filter(values.contains)
+    Direction.values.toSeq.map(point + _).filter(values.contains)
 
   def valueAt(point: Point): T = values(point)

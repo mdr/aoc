@@ -116,7 +116,7 @@ case class SolveState(
 
   override def toString: String = 
       val wss = wireSolveState.options.keys.toSeq.sorted.map(a => s"$a: ${wireSolveState.options(a).toSeq.sorted.mkString("")}").mkString(", ")
-      val dss = digitSolveState.options.keys.toSeq.sorted.map(a => s"${a.mkString}: [${digitSolveState.options(a).toSeq.map(_.mkString).sorted.mkString(", ")}]").mkString(", ")        
+      val dss = digitSolveState.options.keys.toSeq.sortBy(_.mkString).map(a => s"${a.mkString}: [${digitSolveState.options(a).toSeq.map(_.mkString).sorted.mkString(", ")}]").mkString(", ")        
       s"SolveState:\n  ${wss}\n  ${dss}"
 
 case class OneToOneSolveState[A, B](options: Map[A, Set[B]]):

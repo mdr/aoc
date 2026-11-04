@@ -21,7 +21,7 @@ case class Fish(daysLeft: Int):
     case n => Fish(n - 1) -> None
 
 object Fish:
-  def parseFishes(s: String): Seq[Fish] = s.trim.split(",").map(n => Fish(n.toInt))
+  def parseFishes(s: String): Seq[Fish] = s.trim.split(",").map(n => Fish(n.toInt)).toSeq
 
 case class SlowFishState(fishes: Seq[Fish]):
 
@@ -37,7 +37,7 @@ object SlowFishState:
 
 case class FastFishState(fishCounts: Bag[Fish]):
 
-  def evolve = FastFishState(fishCounts bagFlatMap spawn)
+  def evolve = FastFishState(fishCounts.bagFlatMap(spawn))
 
   private def spawn(fish: Fish, count: Long): Bag[Fish] =
     val (evolvedFish, maybeNewFish) = fish.evolve

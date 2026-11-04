@@ -23,7 +23,7 @@ case class HeightMap(heights: Seq[Seq[Int]]):
     0 <= point.x && point.x < mapWidth && 0 <= point.y && point.y < mapHeight
 
   def neighbours(point: Point): Seq[Point] =
-    Direction.values.map(point + _).filter(isInBounds)
+    Direction.values.toSeq.map(point + _).filter(isInBounds)
 
   def isLowPoint(point: Point): Boolean =
     neighbours(point).map(heightAt).forall(heightAt(point) < _)

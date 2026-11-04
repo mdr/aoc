@@ -19,14 +19,14 @@ def candidateInitialVelocities(targetArea: TargetArea): Seq[Point] =
 def solveDay17Part1(targetArea: TargetArea): Long =
   candidateInitialVelocities(targetArea)
     .map(Probe.withVelocity)
-    .filter(_ reaches targetArea)
+    .filter(_.reaches(targetArea))
     .map(_.highestY(targetArea))
     .max
 
 def solveDay17Part2(targetArea: TargetArea): Long =
   candidateInitialVelocities(targetArea)
     .map(Probe.withVelocity)
-    .filter(_ reaches targetArea)
+    .filter(_.reaches(targetArea))
     .size
 
 case class TargetArea(xFrom: Int, xTo: Int, yFrom: Int, yTo: Int):
@@ -60,8 +60,8 @@ case class Probe(position: Point = Point.Origin, velocity: Point):
   def reaches(targetArea: TargetArea): Boolean =
     val finalProbe =
       iterateUntil(this, probe => probe.isBeyond(targetArea) || targetArea.contains(probe.position))(_.step)
-    targetArea contains finalProbe.position
+    targetArea.contains(finalProbe.position)
 
   @tailrec
   final def highestY(targetArea: TargetArea, maxY: Long = Long.MinValue): Long =
-    if targetArea contains position then maxY else step.highestY(targetArea, maxY max position.y)
+    if targetArea.contains(position) then maxY else step.highestY(targetArea, maxY max position.y)

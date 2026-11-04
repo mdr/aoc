@@ -42,7 +42,7 @@ case class PuzzleInput(dots: Seq[Point], folds: Seq[Fold]):
 
   def solvePart1 = paper.fold(folds.head).numberOfDots
 
-  def solvePart2: String = folds.foldLeft(paper)(_ fold _).toString
+  def solvePart2: String = folds.foldLeft(paper)(_.fold(_)).toString
 
 case class Paper(dots: Set[Point]):
   lazy val width  = dots.map(_.x).max.toInt + 1

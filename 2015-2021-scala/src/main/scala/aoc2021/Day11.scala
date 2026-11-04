@@ -44,7 +44,7 @@ case class OctoGrid(
       readyToFlash = if newEnergyLevel == 10 then readyToFlash + point else readyToFlash
     )
 
-  private def incrementAllEnergy: OctoGrid = energyLevels.keySet.foldLeft(this)(_ incrementEnergy _)
+  private def incrementAllEnergy: OctoGrid = energyLevels.keySet.foldLeft(this)(_.incrementEnergy(_))
 
   private def flashComplete(point: Point): OctoGrid =
     copy(readyToFlash = readyToFlash - point, totalFlashes = totalFlashes + 1)
@@ -57,7 +57,7 @@ case class OctoGrid(
         neighbour = point + Point(dx, dy)
         if energyLevels contains neighbour
       yield neighbour
-    neighbours.foldLeft(this)(_ incrementEnergy _).flashComplete(point)
+    neighbours.foldLeft(this)(_.incrementEnergy(_)).flashComplete(point)
 
   @tailrec
   private def propagateFlashes: OctoGrid =
