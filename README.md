@@ -5,7 +5,7 @@ My [Advent of Code](https://adventofcode.com/) solutions. Each directory is a st
 | Directory | Years | Language |
 |---|---|---|
 | [`2015-2021-scala/`](2015-2021-scala) | 2015, 2021 | Scala 3 (sbt) |
-| [`2020/`](2020) | 2020 | Scala 2.13 (sbt) |
+| [`2020/`](2020) | 2020 | Scala 3 (sbt) |
 | [`2022/`](2022) | 2022 | Idris 2 |
 | [`2024/`](2024) | 2024 | Lean 4 (Lake) |
 | [`2025/`](2025) | 2025 | Scala 3 (sbt) |
