@@ -1,13 +1,17 @@
-name: CI
+name: 2025 (Scala)
 
 on:
   push:
-    branches: [main]
+    branches: [master]
+    paths: ["2025/**", ".github/workflows/2025.yml"]
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 2025
 
     steps:
       - uses: actions/checkout@v4
