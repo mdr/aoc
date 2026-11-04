@@ -19,10 +19,10 @@ class Day05Spec extends UnitTest:
   "Example" should "work" in {
     val lines = getLines(example).map(LineSegment.parse)
     lines.length shouldEqual 10
-    calculatePart1(lines) shouldEqual 5
+    calculateDay05Part1(lines) shouldEqual 5
     LineSegment.parse("1,1 -> 3,3").points shouldEqual List(Point(1, 1), Point(2, 2), Point(3, 3))
     LineSegment.parse("9,7 -> 7,9").points shouldEqual List(Point(9, 7), Point(8, 8), Point(7, 9))
-    calculatePart2(lines) shouldEqual 12
+    calculateDay05Part2(lines) shouldEqual 12
   }
 
   "Solution to part 1" should "be correct" in {

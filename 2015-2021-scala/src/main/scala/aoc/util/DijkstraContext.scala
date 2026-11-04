@@ -2,7 +2,6 @@ package aoc.util
 
 import aoc.util.*
 import scala.annotation.tailrec
-import de.sciss.fingertree._
 import java.util.Date
 
 class DijkstraContext[T](initialNode: T, destinationNode: T, nodes: Set[T], adjacency: T => Seq[(T, Double)]):

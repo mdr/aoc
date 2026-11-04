@@ -50,8 +50,8 @@ class Day11Spec extends UnitTest:
          5283751526"""
     val octoGrid = OctoGrid.parse(example)
     iterate(octoGrid, 10)(_.step).totalFlashes shouldEqual 204
-    solveDay1(octoGrid) shouldEqual 1656
-    solveDay2(octoGrid) shouldEqual 195
+    solveDay11Part1(octoGrid) shouldEqual 1656
+    solveDay11Part2(octoGrid) shouldEqual 195
   }
 
   "Solution to part 1" should "be correct" in {

@@ -6,13 +6,13 @@ import scala.PartialFunction.condOpt
 
 val lines: Seq[Line] = loadLines("aoc2021/input-2021-10.txt").map(Line(_))
 
-def day10Part1: Int = solveDay1(lines)
+def day10Part1: Int = solveDay10Part1(lines)
 
-def day10Part2: Long = solveDay2(lines)
+def day10Part2: Long = solveDay10Part2(lines)
 
-def solveDay1(lines: Seq[Line]) = lines.flatMap(_.findIllegalCharacter).sumBy(score)
+def solveDay10Part1(lines: Seq[Line]) = lines.flatMap(_.findIllegalCharacter).sumBy(score)
 
-def solveDay2(lines: Seq[Line]): Long =
+def solveDay10Part2(lines: Seq[Line]): Long =
   val scores = lines.filterNot(_.isCorrupted).map(_.completeString).map(score).sorted
   scores(scores.length / 2)
 

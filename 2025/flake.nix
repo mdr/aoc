@@ -1,27 +1,21 @@
 {
-  description = "Advent of Code 2025";
+  description = "Advent of Code 2025 (Scala 3)";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
+  # sbt itself comes from project/build.properties; nixpkgs provides the launcher.
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            jdk21
-            sbt
-          ];
-
-          shellHook = ''
-            export JAVA_HOME=${pkgs.jdk21}
-          '';
-        };
-      }
-    );
+  outputs = { self, nixpkgs }:
+    let
+      systems = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+    in
+    {
+      devShells = forAllSystems (pkgs:
+        let jdk = pkgs.jdk25; in
+        {
+          default = pkgs.mkShell {
+            packages = [ jdk (pkgs.sbt.override { jre = jdk; }) ];
+          };
+        });
+    };
 }

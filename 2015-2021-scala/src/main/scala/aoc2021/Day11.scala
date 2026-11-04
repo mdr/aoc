@@ -5,13 +5,13 @@ import scala.annotation.tailrec
 
 val octoGrid = OctoGrid.parse(loadString("aoc2021/input-2021-11.txt"))
 
-def day11Part1: Int = solveDay1(octoGrid)
+def day11Part1: Int = solveDay11Part1(octoGrid)
 
-def day11Part2: Int = solveDay2(octoGrid)
+def day11Part2: Int = solveDay11Part2(octoGrid)
 
-def solveDay1(octoGrid: OctoGrid): Int = iterate(octoGrid, 100)(_.step).totalFlashes
+def solveDay11Part1(octoGrid: OctoGrid): Int = iterate(octoGrid, 100)(_.step).totalFlashes
 
-def solveDay2(octoGrid: OctoGrid): Int = iterateUntil(octoGrid, _.allHaveJustFlashed)(_.step).stepsTaken
+def solveDay11Part2(octoGrid: OctoGrid): Int = iterateUntil(octoGrid, _.allHaveJustFlashed)(_.step).stepsTaken
 
 object OctoGrid:
 

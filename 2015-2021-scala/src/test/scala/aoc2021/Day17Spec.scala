@@ -15,8 +15,8 @@ class Day17Spec extends UnitTest:
     Probe.withVelocity(Point(17, -4)).reaches(targetArea) shouldBe false
     Probe.withVelocity(Point(6, 9)).reaches(targetArea) shouldBe true
     Probe.withVelocity(Point(6, 9)).highestY(targetArea) shouldBe 45
-    solveDay1(targetArea) shouldEqual 45
-    solveDay2(targetArea) shouldEqual 112
+    solveDay17Part1(targetArea) shouldEqual 45
+    solveDay17Part2(targetArea) shouldEqual 112
   }
 
   "Solution to part 1" should "be correct" in {

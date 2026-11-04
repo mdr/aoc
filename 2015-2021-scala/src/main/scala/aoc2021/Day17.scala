@@ -5,9 +5,9 @@ import scala.annotation.tailrec
 
 val targetArea = TargetArea.parse(loadString("aoc2021/input-2021-17.txt"))
 
-def day17Part1: Long = solveDay1(targetArea)
+def day17Part1: Long = solveDay17Part1(targetArea)
 
-def day17Part2: Long = solveDay2(targetArea)
+def day17Part2: Long = solveDay17Part2(targetArea)
 
 def candidateInitialVelocities(targetArea: TargetArea): Seq[Point] =
   for
@@ -16,14 +16,14 @@ def candidateInitialVelocities(targetArea: TargetArea): Seq[Point] =
     velocity = Point(xVelocity, yVelocity)
   yield velocity
 
-def solveDay1(targetArea: TargetArea): Long =
+def solveDay17Part1(targetArea: TargetArea): Long =
   candidateInitialVelocities(targetArea)
     .map(Probe.withVelocity)
     .filter(_ reaches targetArea)
     .map(_.highestY(targetArea))
     .max
 
-def solveDay2(targetArea: TargetArea): Long =
+def solveDay17Part2(targetArea: TargetArea): Long =
   candidateInitialVelocities(targetArea)
     .map(Probe.withVelocity)
     .filter(_ reaches targetArea)

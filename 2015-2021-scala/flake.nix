@@ -1,9 +1,8 @@
 {
   description = "Advent of Code 2015 and 2021 (Scala 3)";
 
-  # nixpkgs 21.11: JDK 11 (which Scala 3.1 and sbt 1.5 support) and an sbt launcher that runs on it.
-  # sbt itself comes from project/build.properties.
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
+  # sbt itself comes from project/build.properties; nixpkgs provides the launcher.
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs }:
     let
@@ -11,10 +10,12 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
     in
     {
-      devShells = forAllSystems (pkgs: {
-        default = pkgs.mkShell {
-          packages = [ pkgs.jdk11 (pkgs.sbt.override { jre = pkgs.jdk11; }) ];
-        };
-      });
+      devShells = forAllSystems (pkgs:
+        let jdk = pkgs.jdk25; in
+        {
+          default = pkgs.mkShell {
+            packages = [ jdk (pkgs.sbt.override { jre = jdk; }) ];
+          };
+        });
     };
 }

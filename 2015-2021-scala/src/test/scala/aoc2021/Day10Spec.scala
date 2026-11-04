@@ -21,11 +21,11 @@ class Day10Spec extends UnitTest:
          <{([([[(<>()){}]>(<<{{
          <{([{{}}[<[[[<>{}]]]>[]]"""
     val lines = getLines(example).map(_.trim).map(Line(_))
-    solveDay1(lines) shouldEqual 26397
+    solveDay10Part1(lines) shouldEqual 26397
 
     Line("[({(<(())[]>[[{[]{<()<>>").completeString.mkString shouldEqual "}}]])})]"
     score(Line("[({(<(())[]>[[{[]{<()<>>").completeString) shouldEqual 288957
-    solveDay2(lines) shouldEqual 288957
+    solveDay10Part2(lines) shouldEqual 288957
   }
 
   "Solution to part 1" should "be correct" in {

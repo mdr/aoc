@@ -3,19 +3,19 @@ package aoc2021
 import scala.util.chaining.scalaUtilChainingOps
 import aoc.util.*
 
-val lines: Seq[LineSegment] =
+val lineSegments: Seq[LineSegment] =
   loadLines("aoc2021/input-2021-5.txt").map(LineSegment.parse)
 
-def day05Part1: Int = calculatePart1(lines)
+def day05Part1: Int = calculateDay05Part1(lineSegments)
 
-def day05Part2: Int = calculatePart2(lines)
+def day05Part2: Int = calculateDay05Part2(lineSegments)
 
-def calculatePart1(lines: Seq[LineSegment]): Int =
+def calculateDay05Part1(lines: Seq[LineSegment]): Int =
   lines
     .filter(line => line.isHorizontal || line.isVertical)
     .pipe(countOverlappingPoints)
 
-def calculatePart2(lines: Seq[LineSegment]): Int =
+def calculateDay05Part2(lines: Seq[LineSegment]): Int =
   countOverlappingPoints(lines)
 
 def countOverlappingPoints(lines: Seq[LineSegment]): Int =

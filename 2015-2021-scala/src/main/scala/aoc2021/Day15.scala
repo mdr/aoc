@@ -2,7 +2,6 @@ package aoc2021
 
 import aoc.util.*
 import scala.annotation.tailrec
-import de.sciss.fingertree._
 import java.util.Date
 
 val riskMap = RiskMap.parse(loadString("aoc2021/input-2021-15.txt"))
