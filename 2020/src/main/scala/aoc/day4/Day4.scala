@@ -79,7 +79,7 @@ object Passport {
 
   def load(inputPath: String): Seq[Passport] = {
     val s = Util.loadString(inputPath)
-    s.split("\n\n").map(parsePassport)
+    s.split("\n\n").map(parsePassport).toSeq
   }
 
   private def parsePassport(s: String): Passport =

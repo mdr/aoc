@@ -7,7 +7,7 @@ import scala.util.parsing.combinator.RegexParsers
 
 trait ExpressionParsers extends RegexParsers {
 
-  val expression: Parser[Long]
+  def expression: Parser[Long]
 
   lazy val number: Parser[Long] = """(0|[1-9]\d*)""".r ^^ (_.toLong)
 

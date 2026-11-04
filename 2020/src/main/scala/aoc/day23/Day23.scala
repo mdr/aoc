@@ -47,7 +47,7 @@ class CupCircle(cells: Map[Long, CupCell], var currentLabel: Long) {
 
     @tailrec
     def findDestinationLabel(label: Long): Long = {
-      val lesserLabel = if (label == 1) cells.size else label - 1
+      val lesserLabel = if (label == 1) cells.size.toLong else label - 1
       if (removedLabels contains lesserLabel) findDestinationLabel(lesserLabel) else lesserLabel
     }
 
@@ -92,7 +92,7 @@ case class CupState(cups: Seq[Cup], currentCup: Cup) {
 
   @tailrec
   private def findDestinationCup(cup: Cup, remainingCups: Seq[Cup]): Cup = {
-    val lesserCup = if (cup == 1) cups.size else cup - 1
+    val lesserCup = if (cup == 1) cups.size.toLong else cup - 1
     if (remainingCups contains lesserCup) lesserCup else findDestinationCup(lesserCup, remainingCups)
   }
 
@@ -128,7 +128,7 @@ object Day23 extends App {
     println(circle.productThingy)
   }
 
-  private def loadCups(inputPath: String): Seq[Cup] = Util.loadString(inputPath).map(_.toString.toInt)
+  private def loadCups(inputPath: String): Seq[Cup] = Util.loadString(inputPath).map(_.toString.toLong)
 
   println("Part One")
   solvePartOne("day23/example.txt")

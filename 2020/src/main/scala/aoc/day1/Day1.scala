@@ -24,7 +24,7 @@ object Day1 extends App {
     Seq.fill(numberOfEntries)(entries)
       .sequence
       .filter(_.sum == targetSum)
-      .map(Answer)
+      .map(Answer.apply)
       .headOption
       .getOrElse(throw new RuntimeException("No matching sum found"))
 
@@ -32,7 +32,7 @@ object Day1 extends App {
     entries
       .combinations(numberOfEntries)
       .filter(_.sum == targetSum)
-      .map(Answer)
+      .map(Answer.apply)
       .toSeq
       .headOption
       .getOrElse(throw new RuntimeException("No matching sum found"))

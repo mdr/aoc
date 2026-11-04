@@ -147,7 +147,7 @@ object Tile {
   private val IdRegex = """Tile (\d+):""".r
 
   private def parseId(s: String): TileId = {
-    val IdRegex(id) = s
+    val IdRegex(id) = s: @unchecked
     BigInt(id)
   }
 
@@ -254,8 +254,8 @@ object Day20 extends App {
     val solutions = Solver(fingerprints, width = side, height = side).solve
     val solution = solutions.head
     val combinedTile = solution.tileIdGrid.map(row => {
-      row.map { case (tileId, orientation) => tiles(tileId).withoutBorder.orient(orientation) }.reduce(_ pasteHorizontally _)
-    }).reduce(_ pasteVertically _)
+      row.map { case (tileId, orientation) => tiles(tileId).withoutBorder.orient(orientation) }.reduce(_.pasteHorizontally(_))
+    }).reduce(_.pasteVertically(_))
     println(solution.cornerProduct)
     combinedTile
   }

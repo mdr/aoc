@@ -20,7 +20,7 @@ case class Grid(activeCells: Set[Position], dimensions: Int) {
 
   def cycle: Grid = {
     var nextActiveCells = activeCells
-    val positionsToCheck = (0 until dimensions).traverse(coordinateRange).map(Position)
+    val positionsToCheck = (0 until dimensions).traverse(coordinateRange).map(Position.apply)
     for {
       position <- positionsToCheck
       isActive = activeCells(position)

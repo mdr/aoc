@@ -32,7 +32,7 @@ case class State(mask: Mask = Mask.Initial, memory: Map[Long, Long] = Map(), mod
   private def handleAssignment2(address: Long, value: Long): State = {
     val baseAddress = mask.apply2(address)
     var newMemory = memory
-    for (floaters <- mask.floaters.subsets)
+    for (floaters <- mask.floaters.subsets())
       newMemory = newMemory + (baseAddress + floaters.sum -> value)
     copy(memory = newMemory)
   }
@@ -75,10 +75,10 @@ object Instruction {
 
   def parse(s: String): Instruction = {
     if (s.startsWith("mask")) {
-      val MaskRegex(maskString) = s
+      val MaskRegex(maskString) = s: @unchecked
       SetMask(Mask.parse(maskString))
     } else {
-      val AssignmentRegex(addressString, valueString) = s
+      val AssignmentRegex(addressString, valueString) = s: @unchecked
       AssignmentInstruction(addressString.toLong, valueString.toLong)
     }
   }
@@ -94,7 +94,7 @@ object Day14 extends App {
   private def solve(inputPath: String, mode: Mode): Unit = {
     val instructions = Util.loadLines(inputPath).map(Instruction.parse)
     val initialState = State(mode = mode)
-    val finalState = instructions.foldLeft(initialState)(_ run _)
+    val finalState = instructions.foldLeft(initialState)(_.run(_))
     println(finalState.memorySum)
   }
 

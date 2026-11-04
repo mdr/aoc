@@ -14,11 +14,11 @@ object Day6 extends App {
 
   def loadAnswers(inputPath: String): Seq[GroupAnswers] = {
     val s = Util.loadString(inputPath)
-    s.split("\n\n").map(parseGroup)
+    s.split("\n\n").map(parseGroup).toSeq
   }
 
   private def parseGroup(group: String): GroupAnswers =
-    GroupAnswers(group.split("\n").map(parsePerson))
+    GroupAnswers(group.split("\n").map(parsePerson).toSeq)
 
   private def parsePerson(person: String): PersonAnswers = PersonAnswers(person.toSet)
 

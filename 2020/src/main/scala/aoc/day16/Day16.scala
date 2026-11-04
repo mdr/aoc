@@ -85,7 +85,7 @@ object Day16 extends App {
     }
 
     val departureValues =
-      for ((pos, rule) <- concluded if rule.field startsWith "departure")
+      for ((pos, rule) <- concluded if rule.field.startsWith("departure"))
         yield myTicket.get(pos)
     println(departureValues.map(_.toLong).product)
 

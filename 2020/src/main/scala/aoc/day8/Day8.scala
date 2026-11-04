@@ -11,7 +11,7 @@ object Instruction {
   val InstructionRegex: Regex = """([a-z]+) ([-+]\d+)""".r
 
   def parse(s: String): Instruction = {
-    val InstructionRegex(op, arg) = s
+    val InstructionRegex(op, arg) = s: @unchecked
     op match {
       case "acc" => Acc(arg.toInt)
       case "jmp" => Jmp(arg.toInt)

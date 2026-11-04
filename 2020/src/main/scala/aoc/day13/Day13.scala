@@ -45,7 +45,7 @@ object Day13 extends App {
   }
 
   private def loadProblem(inputPath: String): (Int, Seq[Int]) = {
-    val Seq(first, second, _*) = Util.loadLines(inputPath)
+    val Seq(first, second, _*) = Util.loadLines(inputPath): @unchecked
     val target = first.toInt
     val busIds = second.split(",").filterNot(_ == "x").map(_.toInt).toSeq
     (target, busIds)
@@ -58,7 +58,7 @@ object Day13 extends App {
       .split(",")
       .zipWithIndex
       .collect { case (busId, i) if busId != "x" => Equation(BigInt(-i), BigInt(busId)) }
-      .reduce(_ solve _)
+      .reduce(_.solve(_))
       .pipe(_.normalise)
       .tap(println)
   }

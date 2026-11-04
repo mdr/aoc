@@ -19,7 +19,7 @@ case class Position(x: Long, y: Long) {
 
   def rotate(degrees: Long): Position = {
     import math._
-    val θ = toRadians(-degrees)
+    val θ = toRadians(-degrees.toDouble)
     val newX = x * cos(θ) - y * sin(θ)
     val newY = x * sin(θ) + y * cos(θ)
     copy(x = newX.round, y = newY.round)
@@ -148,14 +148,14 @@ object Day12 extends App {
 
   def solvePartOne(inputPath: String): Unit = {
     val instructions = Util.loadLines(inputPath).map(NavigationInstruction.parse)
-    val ship = instructions.foldLeft(Ship())(_ handle _)
+    val ship = instructions.foldLeft(Ship())(_.handle(_))
     val distance = ship.position.manhattanDistanceTo(Position(0, 0))
     println(distance)
   }
 
   def solvePartTwo(inputPath: String): Unit = {
     val instructions = Util.loadLines(inputPath).map(NavigationInstruction.parse)
-    val ship = instructions.foldLeft(Ship2())(_ handle _)
+    val ship = instructions.foldLeft(Ship2())(_.handle(_))
     val distance = ship.position.manhattanDistanceTo(Position(0, 0))
     println(distance)
   }

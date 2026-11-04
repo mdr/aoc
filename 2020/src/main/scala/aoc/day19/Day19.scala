@@ -22,11 +22,11 @@ object Rule {
         CharacterRule(rest(1))
       else if (rest.contains("|")) {
         val Array(first, second) = rest.split(" \\| ")
-        val ruleIds1 = first.split(" ").map(_.toInt)
-        val ruleIds2 = second.split(" ").map(_.toInt)
+        val ruleIds1 = first.split(" ").map(_.toInt).toSeq
+        val ruleIds2 = second.split(" ").map(_.toInt).toSeq
         AlternationRule(ruleIds1, ruleIds2)
       } else {
-        val ruleIds = rest.split(" ").map(_.toInt)
+        val ruleIds = rest.split(" ").map(_.toInt).toSeq
         SequenceRule(ruleIds)
       }
     ruleId.toInt -> rule

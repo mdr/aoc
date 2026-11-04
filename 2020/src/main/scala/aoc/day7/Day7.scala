@@ -38,7 +38,7 @@ object Day7 extends App {
   val ContentsSpecPattern = """^(\d+) ([a-z ]+) bags?$""".r
 
   def parseContentsSpec(s: String): ContentsSpec = {
-    val ContentsSpecPattern(amount, colour) = s
+    val ContentsSpecPattern(amount, colour) = s: @unchecked
     ContentsSpec(amount.toInt, colour)
   }
 
@@ -50,7 +50,7 @@ object Day7 extends App {
       if (rest == "no other bags") {
         Seq.empty
       } else {
-        rest.split(", ").map(parseContentsSpec)
+        rest.split(", ").map(parseContentsSpec).toSeq
       }
     Rule(colour, contentsSpecs)
   }

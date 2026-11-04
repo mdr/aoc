@@ -9,7 +9,7 @@ object Day10 extends App {
   def solvePartOne(inputPath: String): Unit = {
     val ratings = Util.loadLines(inputPath).map(_.toInt).sorted
     val differences = ratings.appended(ratings.last + 3) zip ratings.prepended(0) map { case (x, y) => x - y }
-    val differencesDistribution = differences.groupBy(identity).mapValues(_.length).toMap
+    val differencesDistribution = differences.groupBy(identity).view.mapValues(_.length).toMap
     println(differencesDistribution(1) * differencesDistribution(3))
   }
 

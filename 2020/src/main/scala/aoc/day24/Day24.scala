@@ -26,17 +26,17 @@ object Direction {
   def parseDirections(s: String): Seq[Direction] =
     if (s.isEmpty)
       Seq.empty
-    else if (s startsWith "e")
+    else if (s.startsWith("e"))
       East +: parseDirections(s.tail)
-    else if (s startsWith "se")
+    else if (s.startsWith("se"))
       Southeast +: parseDirections(s drop 2)
-    else if (s startsWith "sw")
+    else if (s.startsWith("sw"))
       Southwest +: parseDirections(s drop 2)
-    else if (s startsWith "w")
+    else if (s.startsWith("w"))
       West +: parseDirections(s.tail)
-    else if (s startsWith "ne")
+    else if (s.startsWith("ne"))
       Northeast +: parseDirections(s drop 2)
-    else if (s startsWith "nw")
+    else if (s.startsWith("nw"))
       Northwest +: parseDirections(s drop 2)
     else
       throw new AssertionError(s"Unexpected $s")
@@ -59,7 +59,7 @@ case class Hex(x: Int, y: Int) {
     case West => copy(x = x - 1)
   }
 
-  def go(directions: Seq[Direction]): Hex = directions.foldLeft(this)(_ go _)
+  def go(directions: Seq[Direction]): Hex = directions.foldLeft(this)(_.go(_))
 
   def neighbours: Seq[Hex] = Direction.All.map(go)
 
