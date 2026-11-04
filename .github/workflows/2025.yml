@@ -2,7 +2,7 @@ name: 2025 (Scala)
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths: ["2025/**", ".github/workflows/2025.yml"]
   workflow_dispatch:
 
