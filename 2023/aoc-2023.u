@@ -1,50 +1,50 @@
-type day02.Colour
+unique[uiq0rjdnupro2bjgquaf66t3kvukq0r2] type day02.Colour
   = Red
   | Green
   | Blue
 
-type day02.Game
+unique[a0n2guk48qsvv33aq9mqgdvje0j4tu29] type day02.Game
   = { id : Nat, reveals : [Bag Colour] }
 
-type day03.EngineSchematic
+unique[f5gqnv8vsufo1ftpetj3a3dkjokd12ci] type day03.EngineSchematic
   = { partNumbers : Set PartNumber, symbols : Set Symbol }
 
-type day03.PartNumber
+unique[p67t70rk29sa0gh21pipofske67s25ds] type day03.PartNumber
   = { number : Nat, location : Rectangle }
 
-type day03.Symbol
+unique[i7r1r46ecdik16eg8tv6gqd0ufjj67rt] type day03.Symbol
   = { text : Text, location : Point }
 
-type day04.Card
+unique[r9nvh0s4ic62qpslo3hbc5uekff1n7m0] type day04.Card
   = { cardNumber : Nat, winningNumbers : [Nat], numbersYouHave : [Nat] }
 
-type day05.Almanac
+unique[aevm3o7q3h9uj3b94niej39h36upb5em] type day05.Almanac
   = { seeds : [Nat], maps : [AlmanacMap] }
 
-type day05.AlmanacMap
+unique[aneactkcgg7amjqr9kkoqgjo28a1952r] type day05.AlmanacMap
   = { sourceCategory : Text,
       destinationCategory : Text,
       ranges : [AlmanacMapRange] }
 
-type day05.AlmanacMapRange
+unique[qut3njaaaoash7l0dns8mnhidmb8ckmi] type day05.AlmanacMapRange
   = { destinationStart : Nat, sourceStart : Nat, length : Nat }
 
-type day06.Race
+unique[bh3q1cumrgmojj6f9aa3s613ptdqdjcf] type day06.Race
   = { raceDuration : Nat, distance : Nat }
 
-type day06.Timesheet
+unique[euafppusgqncpbqlfgqbgidc4g4o152v] type day06.Timesheet
   = { times : [Nat], distances : [Nat] }
 
-type day07.Card
+unique[vk65ehrs675is7valpdknd5j3m9p3sdu] type day07.Card
   = { toNat : Nat }
 
-type day07.Hand
+unique[pmgj8nr5ecooqmhi7v8l3vi1pmpssjmd] type day07.Hand
   = { cards : [Nat] }
 
-type day07.HandAndBid
+unique[efcd8m6cspmo2pskhks4t4ras08t5o5u] type day07.HandAndBid
   = { hand : Hand, bid : Nat }
 
-type day07.HandType
+unique[iai13u1kd2anmb0ee4bheido1dq9sks2] type day07.HandType
   = FiveOfAKind
   | FourOfAKind
   | FullHouse
@@ -53,148 +53,148 @@ type day07.HandType
   | OnePair
   | HighCard
 
-type day08.Direction
+unique[ac4mo5c0krpp2rc7ivalpdfoianai9u9] type day08.Direction
   = Left
   | Right
 
-type day08.Node
+unique[c99r99mdilm1jl8ebl2oie2mrnr9i8fm] type day08.Node
   = { toText : Text }
 
-type day08.NodeInstructions
+unique[eh4ltcqu9kcjo71fppmlukh3pun32q79] type day08.NodeInstructions
   = { label : day08.Node, left : day08.Node, right : day08.Node }
 
-type day08.NodeMap
+unique[mn614fe5m54u46dkrav49kid8jfgr0jl] type day08.NodeMap
   = { toMap : Map day08.Node (day08.Node, day08.Node) }
 
-type day08.PuzzleInput
+unique[mio5fb8db4mtp2qjv2nmv97phk9i9pi0] type day08.PuzzleInput
   = { directions : [day08.Direction], nodes : NodeMap }
 
-ability day10.LineScanner where
+unique[t9m61kd6mrmc2grk7rj2uivg48voaps4] ability day10.LineScanner where
   emitPosition : {LineScanner} ()
   flipIsInsideLoop : {LineScanner} ()
   isInsideLoop : {LineScanner} Boolean
   nextCharacter : {LineScanner} Char
 
-type day10.PipeGraph
+unique[u56uf8s9plcdktsjsmns8kvin9bu3jr0] type day10.PipeGraph
   = { start : Point, connectionMap : Map Point [Point] }
 
-type day12.SpringCondition
+unique[gb20v1d7kve8s79i2es8g4pvsrpj2tcc] type day12.SpringCondition
   = Operational
   | Damaged
   | Unknown
 
-type day12.SpringConditionRecord
+unique[q6kdr48u4j1dqhlrukjq6o53ic2ncvkk] type day12.SpringConditionRecord
   = { springs : [SpringCondition], checksum : [Nat] }
 
-type day13.Axis
+unique[t1a18dua93kol1pb3qbh6he0hsjrd4so] type day13.Axis
   = Horizontal
   | Vertical
 
-type day13.ReflectionLine
+unique[u59sa8vojjtkuh5pi3grcl81f9r7dovb] type day13.ReflectionLine
   = { axis : Axis, index : Nat }
 
-type day13.Terrain
+unique[urd5cs6vq1k3plik93rk3j9h3d7qrkiu] type day13.Terrain
   = Ash
   | Rock
 
-type day13.TerrainPattern
+unique[qih6vpcbmkc85a3aen0nvgm4c85i6vq3] type day13.TerrainPattern
   = { rows : [[day13.Terrain]] }
 
-type day14.Terrain
+unique[dv1u2i69aiobi7knkhkpsg07qjutmdmm] type day14.Terrain
   = RoundedRock
   | SquareShapedRock
   | EmptySpace
 
-type day15.Lens
+unique[tqce7432e8hqcgri0mro2i9n8ffag1bv] type day15.Lens
   = { label : Text, focusLength : Nat }
 
-type day15.Step
+unique[abachphstvo6u05o43nk1m53l6cpum01] type day15.Step
   = Remove Text
   | Upsert Text Nat
 
-type day16.BeamState
+unique[iipc0gn9h4dqo39nd5kt29qm25uhmbts] type day16.BeamState
   = { enteringPoint : Point, direction : utils.Direction }
 
-type day16.TileMap
+unique[qhptb251k24reh806duf8i6q8vc44rjm] type day16.TileMap
   = { tilesByPoint : Map Point Char, bounds : Rectangle }
 
-type day17.SearchNode
+unique[r7ar239jfg65rrmu0dsd19un7mu67dlh] type day17.SearchNode
   = { location : Point, history : Optional (utils.Direction, Nat) }
 
-type day18.BoundarySegment
+unique[dv0cbc550cdulfguuq6hmtenck9b31n8] type day18.BoundarySegment
   = { previousTurn : Turn,
       currentDirection : utils.Direction,
       distance : Float,
       nextTurn : Turn }
 
-type day18.ColourCode
+unique[ppcu60cg7pkgjg15mmk9cuchm3nqioq1] type day18.ColourCode
   = ColourCode Text
 
-type day18.DigPlanInstruction
+unique[ccjc5abcrsnk0bcmoqpdd9fg1o0lrrvr] type day18.DigPlanInstruction
   = { direction : utils.Direction, steps : Nat, colour : ColourCode }
 
-type day18.Turn
+unique[bnqjc2gsk9pqcr19i0e8b3m670rjghhj] type day18.Turn
   = TurnLeft
   | TurnRight
 
-type day19.Comparison
+unique[c5ggcc15br297rsm6l15g1l4gqgbjknp] type day19.Comparison
   = LessThan
   | GreaterThan
 
-type day19.Conclusion
+unique[f7f1k50nersp3g3ai6qvg5egicn2rdrc] type day19.Conclusion
   = Accept
   | Reject
   | SendToWorkflow Text
 
-type day19.Condition
+unique[scjkvbvn8epvc1kdbqjnaa55kirtgen1] type day19.Condition
   = { propertyName : Text, comparison : Comparison, value : Nat }
 
-type day19.PuzzleInput
+unique[j0etjkd21aqhu7dlb51gei4kktq4if05] type day19.PuzzleInput
   = { workflows : [Workflow], parts : [Map Text Nat] }
 
-type day19.Rule
+unique[imng9j4q5cs5uu0khacnha645i5jam4u] type day19.Rule
   = { condition : Condition, conclusion : Conclusion }
 
-type day19.Workflow
+unique[j4ene3oe7v9grj8j9sn3vjlcf77l8qhe] type day19.Workflow
   = { name : Text, rules : [Rule], otherwise : Conclusion }
 
-type day20.Module
+unique[m3bfss49fccg3d8cnoaelobh9cii9pq3] type day20.Module
   = Broadcast [ModuleName]
   | Conjunction ModuleName (Map ModuleName Pulse) [ModuleName]
   | FlipFlop ModuleName OnOrOff [ModuleName]
   | Untyped ModuleName
 
-type day20.ModuleName
+unique[f380fr43kue4f1oq15jv82m2jlpjealo] type day20.ModuleName
   = { toText : Text }
 
-type day20.ModuleNetwork
+unique[rjcsf94cm33jmki0afrunsfjv1kdv7c6] type day20.ModuleNetwork
   = { modules : Map ModuleName Module }
 
-type day20.ModuleState
+unique[boo238h04n4bugu2rk69pvr5u05cjl51] type day20.ModuleState
   = { network : ModuleNetwork, pulseCounts : PulseCounts }
 
-type day20.OnOrOff
+unique[gsjk7p2lueue4b6cc6cgjutudjehea06] type day20.OnOrOff
   = On
   | Off
 
-type day20.Pulse
+unique[cquaote47b0j1avsnhig07dm3oed50iu] type day20.Pulse
   = High
   | Low
 
-type day20.PulseCounts
+unique[glnt6gcnnqkjr0uknre55l9sj9kbtfn2] type day20.PulseCounts
   = { high : Bag ModuleName, low : Bag ModuleName }
 
-type day20.PulseTransmission
+unique[f7m3h0dqamhos8aags409v4d0e426qgp] type day20.PulseTransmission
   = { from : ModuleName, pulse : Pulse, to : ModuleName }
 
-type day21.Farm
+unique[gk2ok3hc3vvul0ui9lddhupejghib642] type day21.Farm
   = { grid : [[day21.Terrain]], bounds : Rectangle, start : Point }
 
-type day21.Terrain
+unique[k71bjq28aodine8h7kosp0k8dcek6a5k] type day21.Terrain
   = Rock
   | Plot
 
-type utils.CompassDirection8
+unique[a2jo0ntlnn0ufcrklorq7u8p0ubnbm7a] type utils.CompassDirection8
   = North
   | Northeast
   | East
@@ -204,25 +204,25 @@ type utils.CompassDirection8
   | West
   | Northwest
 
-type utils.Cycle
+unique[rt2n0nhvieitaub56h7m38m723ttluhn] type utils.Cycle
   = { period : Nat, offset : Nat }
 
-type utils.Direction
+unique[fufc8viq0hfl9bapff6h6jm7tq2caigl] type utils.Direction
   = Up
   | Down
   | Left
   | Right
 
-type utils.IntRange
+unique[uu1rs9lv8rlo0g9cke45dkke2sh6f55f] type utils.IntRange
   = { start : Int, length : Int }
 
-type utils.NatRange
+unique[ojiee13i0gob4adk051fvp76lg97gqi3] type utils.NatRange
   = { start : Nat, length : Nat }
 
-type utils.Point
+unique[ok7rrdqml37ba1csresovl1tdr0bf5r5] type utils.Point
   = { x : Nat, y : Nat }
 
-type utils.Rectangle
+unique[v0vdhg9o91t3shtg7rp9u2j49kud521a] type utils.Rectangle
   = { topLeft : Point, bottomRight : Point }
 
 day01.digitWords : [(Text, Nat)]
@@ -742,7 +742,6 @@ day04.example =
 
 day04.parser.card : '{Parse e} day04.Card
 day04.parser.card = do
-  use day04.parser numberMaybeWhitespace
   text! "Card"
   skipWhitespace()
   cardNumber = numeric()
@@ -1683,7 +1682,7 @@ day06.parser.lineOfTimes : Text ->{Parse e} [Nat]
 day06.parser.lineOfTimes prefix =
   text! prefix
   skipWhitespace()
-  many! day04.parser.numberMaybeWhitespace
+  many! numberMaybeWhitespace
 
 day06.parser.times : '{Parse e} [Nat]
 day06.parser.times = do lineOfTimes "Time:"
@@ -1756,13 +1755,13 @@ test> day06.solvePart2.tests.puzzle =
 day06.waysToWin : Race -> Nat
 day06.waysToWin race =
   use Nat + -
+  use Race distance
   (low, high) = buttonTimes race
   newLow =
-    if distanceTravelled (raceDuration race) low === recordDistance race then
-      low + 1
+    if distanceTravelled (raceDuration race) low === distance race then low + 1
     else low
   newHigh =
-    if distanceTravelled (raceDuration race) high === recordDistance race then
+    if distanceTravelled (raceDuration race) high === distance race then
       high - 1
     else high
   newHigh - newLow + 1
@@ -11930,6 +11929,15 @@ up.Each.failWhen b = guard (Boolean.not b)
 
 up.Each.filterNot : (a ->{e} Boolean) -> a ->{e, Each} a
 up.Each.filterNot f = Each.filter (f >> Boolean.not)
+
+up.lib.base.data.Multimap.insertAll : k -> [v] -> Map k [v] -> Map k [v]
+up.lib.base.data.Multimap.insertAll key values multimap =
+  values
+    |> List.foldLeft
+      (multimap value -> Multimap.insert key value multimap) multimap
+
+up.lib.base.data.Set.difference : Set a -> Set a -> Set a
+up.lib.base.data.Set.difference xs ys = Set.deletes (ys |> Set.toList) xs
 
 up.Map.indexBy : (a ->{g} b) -> [a] ->{g} Map b a
 up.Map.indexBy f = List.map (a -> (f a, a)) >> Map.fromList

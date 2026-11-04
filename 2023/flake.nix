@@ -11,7 +11,8 @@
     {
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShellNoCC {
-          packages = [ pkgs.unison-ucm ];
+          # python3 is for export.py.
+          packages = [ pkgs.unison-ucm pkgs.python3 ];
         };
       });
     };
