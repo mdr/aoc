@@ -4,8 +4,8 @@ import Aoc2024.Utils
 import Std
 
 private def decorateWithCoordinates (s: String): List PointAndChar := do
-  let (y, line) <- s.splitOn "\n" |> .enum
-  let (x, c) <- line.toList.enum
+  let (line, y) <- s.splitOn "\n" |> .zipIdx
+  let (c, x) <- line.toList.zipIdx
   pure ⟨⟨x, y⟩, c⟩
 
 private def removeDots (decoratedChars : List PointAndChar) : List PointAndChar := decoratedChars.filter (·.char != '.')

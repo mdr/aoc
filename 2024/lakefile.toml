@@ -47,5 +47,5 @@ root = "Aoc2024.Day10.Main"
 [[require]]
 name = "Regex"
 git = "https://github.com/bergmannjg/regex"
-rev = "main"
+rev = "v4.35.0"
 

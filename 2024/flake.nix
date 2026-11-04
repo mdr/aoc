@@ -1,9 +1,8 @@
 {
   description = "Advent of Code 2024 (Lean 4)";
 
-  # elan installs the exact Lean release named in lean-toolchain (v4.13.0).
-  # nixpkgs only had lean4 4.13.0 at an uncached commit, so using it would
-  # mean building Lean from source.
+  # Lean comes from nixpkgs. Keep lean-toolchain (used by elan, editors and CI)
+  # at the same version when updating flake.lock.
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs }:
@@ -14,8 +13,12 @@
     {
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
-          # go-task and python3 are for Taskfile.yml and the add_day_to_*.py scripts.
-          packages = with pkgs; [ elan go-task python3 ];
+          packages = [
+            pkgs.lean4
+            # For Taskfile.yml and the add_day_to_*.py scripts.
+            pkgs.go-task
+            (pkgs.python3.withPackages (ps: [ ps.toml ps.pyyaml ]))
+          ];
         };
       });
     };

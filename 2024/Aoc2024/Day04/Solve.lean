@@ -34,7 +34,7 @@ def solvePart1 (s : String): Int := parseGrid s |> transformGridInAllWays |>.sum
 -- Part 2
 
 private def slidingGrids (grid : Grid): List Grid :=
-  grid.slidingWindows 3 |>.bind (λ rowBundle => rowBundle.map (List.slidingWindows 3) |>.transpose)
+  grid.slidingWindows 3 |>.flatMap (λ rowBundle => rowBundle.map (List.slidingWindows 3) |>.transpose)
 
 #guard slidingGrids [['A', 'B', 'C', 'D', 'E'], ['F', 'G', 'H', 'I', 'J'], ['K', 'L', 'M', 'N', 'O']] ==
 [
@@ -69,6 +69,6 @@ private def allRotations : List (Grid -> Grid) :=
 private def rotateAll (grid : Grid) : List Grid := allRotations.map (· grid)
 
 def solvePart2 (s : String) : Int :=
-  parseGrid s |> slidingGrids |>.bind rotateAll |>.countP is2Mas
+  parseGrid s |> slidingGrids |>.flatMap rotateAll |>.countP is2Mas
 
 #guard solvePart2 exampleInput2 = 9

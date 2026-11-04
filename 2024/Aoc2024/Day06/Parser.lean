@@ -6,12 +6,12 @@ open Std.Internal.Parsec.String
 open Std.Internal.Parsec
 open Std (HashSet)
 
-instance : Bind List where bind := List.bind
-instance : Pure List where pure := List.pure
+instance : Bind List where bind xs f := xs.flatMap f
+instance : Pure List where pure x := [x]
 
 private def decorateWithCoordinates (s: String): List (Point × Char) := do
-  let (y, line) <- s.splitOn "\n" |> .enum
-  let (x, c) <- line.toList.enum
+  let (line, y) <- s.splitOn "\n" |> .zipIdx
+  let (c, x) <- line.toList.zipIdx
   pure (⟨x, y⟩, c)
 
 def parseInput (s: String): Except String PuzzleInput := do

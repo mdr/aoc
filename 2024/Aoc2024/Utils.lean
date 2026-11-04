@@ -39,14 +39,12 @@ def sepBy (p : Parser α) (sep : Parser β) : Parser (List α) :=
 #guard (sepBy digits (skipChar ',')).run "4" == .ok [4]
 #guard (sepBy digits (skipChar ',')).run "" == .ok []
 
-instance listBind: Bind List where bind := List.bind
-instance listPure: Pure List where pure := List.pure
+instance listBind: Bind List where bind xs f := xs.flatMap f
+instance listPure: Pure List where pure x := [x]
 
 namespace List
 
-  def sum (xs: List Int) : Int := xs.foldl .add 0
-
-  #guard [].sum = 0
+  #guard ([] : List Int).sum = 0
   #guard [1, 2, 3].sum = 6
 
   def sumBy (f : α → Int) (xs : List α) : Int := xs.foldl (λ acc x => acc + f x) 0
@@ -133,7 +131,7 @@ namespace List
     let rec loop (n : Nat) (acc : List (List α)) : List (List α) :=
       match n with
       | 0 => acc
-      | n + 1 => loop n (acc.bind λ l => options.map (λ o => o :: l))
+      | n + 1 => loop n (acc.flatMap λ l => options.map (λ o => o :: l))
     loop n [[]]
 
   #guard [1, 2].replicateM 0 == [[]]
@@ -154,13 +152,8 @@ namespace List
   #guard [1, 2, 3].combinations 4 == []
   #guard [1, 2, 3, 4].combinations 2 == [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
 
-  def groupByKey [BEq α] [Hashable α] (key : β → α) (xs : List β): HashMap α (List β) :=
-     xs.toArray.groupByKey key |>.map (λ _ v => v.toList)
-
   def groupByAndTransformValues [BEq α] [Hashable α] (key : β → α) (f : β → γ) (xs : List β): HashMap α (List γ) :=
     xs.groupByKey key |>.map (λ _ v => v.map f)
-
-  def flatMap {α : Type u} {β : Type v} (a : List α) (b : α → List β) : List β := join (map b a)
 
 end List
 
@@ -180,7 +173,7 @@ namespace Std.HashMap
     m.toList.foldl (init := init) λ acc (k, v) => f acc k v
 
   def invert [BEq β] [Hashable β] [BEq α] [Hashable α] (m : HashMap α β) : HashMap β (List α) :=
-    m.foldl (init := HashMap.empty) λ acc k v =>
+    m.foldl (init := {}) λ acc k v =>
       match acc.get? v with
       | some ks => acc.insert v (k :: ks)
       | none => acc.insert v [k]
@@ -188,10 +181,10 @@ namespace Std.HashMap
 end Std.HashMap
 
 namespace String
-  def lines (s : String) : List String := s.splitOn "\n"
+  def splitLines (s : String) : List String := s.splitOn "\n"
 end String
 
-#guard "1\n2\n3".lines == ["1", "2", "3"]
+#guard "1\n2\n3".splitLines == ["1", "2", "3"]
 
 def iterate (n : Nat) (f : α -> α) (x : α) : α :=
   match n with
@@ -235,15 +228,15 @@ def Point.toPair (p : Point) : (Int × Int) := (p.x, p.y)
 
 def Point.origin : Point := { x := 0, y := 0 }
 
-structure Vector where
+structure Vec where
   x : Int
   y : Int
 deriving BEq, Hashable, Repr, Inhabited
 
-def Point.vectorTo (from_ to : Point) : Vector := { x := to.x - from_.x, y := to.y - from_.y }
+def Point.vectorTo (from_ to : Point) : Vec := { x := to.x - from_.x, y := to.y - from_.y }
 #guard ({ x := 1, y := 1 } : Point).vectorTo { x := 2, y := 2 } == { x := 1, y := 1 }
 
-def Point.add (p : Point) (v : Vector) : Point := { x := p.x + v.x, y := p.y + v.y }
+def Point.add (p : Point) (v : Vec) : Point := { x := p.x + v.x, y := p.y + v.y }
 #guard Point.add { x := 1, y := 1 } { x := 2, y := 2 } == { x := 3, y := 3 }
 
 structure Rectangle where

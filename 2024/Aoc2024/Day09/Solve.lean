@@ -57,15 +57,15 @@ private def nextFileBlockOnOrBefore (i : Nat) (blocks : Blocks) : Nat :=
 private def swapBlocks (blocks : Blocks) (index1 index2 : Nat) : Blocks :=
   let value1 := blocks.getD index1 none
   let value2 := blocks.getD index2 none
-  blocks.setD index1 value2 |>.setD index2 value1
+  blocks.setIfInBounds index1 value2 |>.setIfInBounds index2 value1
 
 #guard swapBlocks #[some 0, some 1, none, none, none, some 2] 1 5 ==
   #[some 0, some 2, none, none, none, some 1]
 
 private def checksum (blocks : Blocks) : Int :=
-  blocks.toList.enum.sumBy λ
-    | (_, none) => 0
-    | (i, some id) => id * i
+  blocks.toList.zipIdx.sumBy λ
+    | (none, _) => 0
+    | (some id, i) => id * i
 
 private def solvePart1 (diskMap : List Nat) : Int := Id.run do
   let mut blocks := expandDiskMap diskMap

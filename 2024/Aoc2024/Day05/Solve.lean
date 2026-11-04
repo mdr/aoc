@@ -5,7 +5,7 @@ open Std (HashSet)
 
 -- Part 1
 
-private def middleElement {α} (l : List α) : Option α := l.get? (l.length / 2)
+private def middleElement {α} (l : List α) : Option α := l[l.length / 2]?
 
 private def middlePageNumber (update : Update) : Page := middleElement update.pages |>.getD 0
 

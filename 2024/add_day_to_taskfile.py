@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i python -p python3Packages.pyyaml
+#!/usr/bin/env python3
 
 import sys
 import yaml

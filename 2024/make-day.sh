@@ -19,7 +19,9 @@ fi
 cp -R "$source_dir" "$target_dir"
 
 # Replace XX with NN in file contents
-find "$target_dir" -type f -exec sed -i '' "s/XX/${day_number}/g" {} +
+# -i.bak works with both BSD and GNU sed
+find "$target_dir" -type f -exec sed -i.bak "s/XX/${day_number}/g" {} +
+find "$target_dir" -type f -name '*.bak' -delete
 
 # # Rename files and directories containing XX
 # find "$target_dir" -depth -name "*XX*" | while read path; do

@@ -3,4 +3,4 @@ import Aoc2024.Day04.Types
 import Aoc2024.Utils
 import Std
 
-def parseGrid (s : String) : Grid := s.lines.map (·.toList)
+def parseGrid (s : String) : Grid := s.splitLines.map (·.toList)
