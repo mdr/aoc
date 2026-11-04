@@ -34,7 +34,7 @@ parseInventories : String -> Maybe (List ElfInventory)
 parseInventories = traverse (traverse parseInteger) . getLineGroups
 
 solve' : List ElfInventory -> Maybe Integer
-solve' = maxList . map sum
+solve' = Utils.maximum . map sum
 
 solve : String -> Maybe Integer
 solve = (>>= solve') . parseInventories

@@ -1,8 +1,7 @@
 {
   description = "Advent of Code 2022 (Idris 2)";
 
-  # The nixpkgs revision the original shell.nix pinned (Idris 2 0.6.0).
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/ce5fe99df1f15a09a91a86be9738d68fadfbad82";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs }:
     let
@@ -12,7 +11,7 @@
     {
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ idris2 chez-racket rlwrap ];
+          packages = with pkgs; [ idris2 rlwrap ];
         };
       });
     };

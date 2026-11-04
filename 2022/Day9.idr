@@ -81,7 +81,7 @@ parseMotions = lines .> traverse parseMotion
 
 -- Part 1
 
-makeInitialState : (knots : Nat) -> {auto prf : NonZero knots} -> State
+makeInitialState : (knots : Nat) -> {auto prf : IsSucc knots} -> State
 makeInitialState knots = makeState (replicate1 knots origin)
   where
     makeState : Rope -> State

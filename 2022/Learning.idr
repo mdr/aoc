@@ -41,7 +41,7 @@ printf fmt = printfFmt (toFormat (unpack fmt)) ""
 
 checkEqNat' : (n : Nat) -> (m : Nat) -> Maybe (n = m)
 checkEqNat' Z Z = Just Refl
-checkEqNat' (S n) (S m) = checkEqNat' n m |> map (cong S)
+checkEqNat' (S n) (S m) = checkEqNat' n m |> map (\prf => cong S prf)
 checkEqNat' _ _ = Nothing
 
 myReverseSlow : Vect n a -> Vect n a

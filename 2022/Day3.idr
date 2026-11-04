@@ -32,7 +32,7 @@ Rucksack = (Compartment, Compartment)
 
 parseRucksack : String -> Rucksack
 parseRucksack s = 
-  let middle = divNatNZ (length s) 2 SIsNonZero in
+  let middle = divNatNZ (length s) 2 ItIsSucc in
       splitAt middle (unpack s)
 
 priority : Item -> Integer

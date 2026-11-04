@@ -25,7 +25,7 @@ examples = [
 
 -- Part 1
 
-solve' : (n: Nat) -> {auto prf : NonZero n} -> String -> Maybe Nat
+solve' : (n: Nat) -> {auto prf : IsSucc n} -> String -> Maybe Nat
 solve' n s =
   do
     let windows = slidingWindows n (unpack s)

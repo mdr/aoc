@@ -10,11 +10,6 @@ import System.File
 
 %default total
 
-infixl 1 |>
-
-public export
-(|>) : a -> (a -> b) -> b
-a |> f = f a
 
 infixl 1 .>
 
@@ -110,8 +105,8 @@ updateHead : (a -> a) -> List1 a -> List1 a
 updateHead f (x ::: xs) = f x ::: xs
 
 public export
-replicate1 : (n : Nat) -> a -> {auto prf : NonZero n} -> List1 a
-replicate1 (S n) x {prf = SIsNonZero} = x ::: replicate n x
+replicate1 : (n : Nat) -> a -> {auto prf : IsSucc n} -> List1 a
+replicate1 (S n) x {prf = ItIsSucc} = x ::: replicate n x
 
 public export
 sign : Integer -> Integer
@@ -121,9 +116,9 @@ sign n =
   else -1
 
 public export
-slidingWindows : (n : Nat) -> List a -> {auto prf : NonZero n} -> List (List a)
+slidingWindows : (n : Nat) -> List a -> {auto prf : IsSucc n} -> List (List a)
 slidingWindows n [] = []
-slidingWindows (S n) (x :: xs) {prf = SIsNonZero} = 
+slidingWindows (S n) (x :: xs) {prf = ItIsSucc} = 
   let 
     window = x :: take n xs
   in
