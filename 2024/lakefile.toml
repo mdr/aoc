@@ -1,0 +1,51 @@
+name = "aoc2024"
+version = "0.1.0"
+defaultTargets = [ "day1", "day2", "day3", "day4", "day5", "day6", "day7", "day8", "day9", "day10",]
+[[lean_lib]]
+name = "Aoc2024"
+
+[[lean_exe]]
+name = "day1"
+root = "Aoc2024.Day01.Main"
+
+[[lean_exe]]
+name = "day2"
+root = "Aoc2024.Day02.Main"
+
+[[lean_exe]]
+name = "day3"
+root = "Aoc2024.Day03.Main"
+
+[[lean_exe]]
+name = "day4"
+root = "Aoc2024.Day04.Main"
+
+[[lean_exe]]
+name = "day5"
+root = "Aoc2024.Day05.Main"
+
+[[lean_exe]]
+name = "day6"
+root = "Aoc2024.Day06.Main"
+
+[[lean_exe]]
+name = "day7"
+root = "Aoc2024.Day07.Main"
+
+[[lean_exe]]
+name = "day8"
+root = "Aoc2024.Day08.Main"
+
+[[lean_exe]]
+name = "day9"
+root = "Aoc2024.Day09.Main"
+
+[[lean_exe]]
+name = "day10"
+root = "Aoc2024.Day10.Main"
+
+[[require]]
+name = "Regex"
+git = "https://github.com/bergmannjg/regex"
+rev = "main"
+
