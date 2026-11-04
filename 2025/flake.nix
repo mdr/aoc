@@ -13,7 +13,7 @@
       devShells = forAllSystems (pkgs:
         let jdk = pkgs.jdk25; in
         {
-          default = pkgs.mkShell {
+          default = pkgs.mkShellNoCC {
             packages = [ jdk (pkgs.sbt.override { jre = jdk; }) ];
           };
         });

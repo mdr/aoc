@@ -3,24 +3,18 @@ name: 2025 (Scala)
 on:
   push:
     branches: [main]
-    paths: ["2025/**", ".github/workflows/2025.yml"]
+    paths: ["2025/**", ".github/workflows/2025.yml", ".github/workflows/sbt.yml"]
+  pull_request:
+    paths: ["2025/**", ".github/workflows/2025.yml", ".github/workflows/sbt.yml"]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 2025
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-
-      - name: Run tests
-        run: nix develop --command sbt test
+  sbt:
+    uses: ./.github/workflows/sbt.yml
+    with:
+      directory: 2025
+      command: testFull

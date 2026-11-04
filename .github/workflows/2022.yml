@@ -1,0 +1,27 @@
+name: 2022 (Idris)
+
+on:
+  push:
+    branches: [main]
+    paths: ["2022/**", ".github/workflows/2022.yml"]
+  pull_request:
+    paths: ["2022/**", ".github/workflows/2022.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "2022"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+      - run: nix develop --command idris2 --build aoc2022.ipkg

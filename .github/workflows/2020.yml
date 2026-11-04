@@ -1,0 +1,20 @@
+name: 2020 (Scala)
+
+on:
+  push:
+    branches: [main]
+    paths: ["2020/**", ".github/workflows/2020.yml", ".github/workflows/sbt.yml"]
+  pull_request:
+    paths: ["2020/**", ".github/workflows/2020.yml", ".github/workflows/sbt.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sbt:
+    uses: ./.github/workflows/sbt.yml
+    with:
+      directory: 2020
+      command: compile

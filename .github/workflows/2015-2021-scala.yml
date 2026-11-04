@@ -1,0 +1,20 @@
+name: 2015-2021 (Scala)
+
+on:
+  push:
+    branches: [main]
+    paths: ["2015-2021-scala/**", ".github/workflows/2015-2021-scala.yml", ".github/workflows/sbt.yml"]
+  pull_request:
+    paths: ["2015-2021-scala/**", ".github/workflows/2015-2021-scala.yml", ".github/workflows/sbt.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sbt:
+    uses: ./.github/workflows/sbt.yml
+    with:
+      directory: 2015-2021-scala
+      command: testFull

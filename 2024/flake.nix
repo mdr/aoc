@@ -1,7 +1,7 @@
 {
   description = "Advent of Code 2024 (Lean 4)";
 
-  # Lean comes from nixpkgs. Keep lean-toolchain (used by elan, editors and CI)
+  # Lean comes from nixpkgs. Keep lean-toolchain (used by elan, e.g. in editors)
   # at the same version when updating flake.lock.
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 

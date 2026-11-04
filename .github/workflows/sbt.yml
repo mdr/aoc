@@ -1,0 +1,30 @@
+# Reusable: runs an sbt command in a project's Nix dev shell.
+name: sbt
+
+on:
+  workflow_call:
+    inputs:
+      directory:
+        required: true
+        type: string
+      command:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  sbt:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.directory }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+      # Coursier, sbt and Ivy caches, keyed on the build files.
+      - uses: coursier/cache-action@v9
+        with:
+          root: ${{ inputs.directory }}
+      - run: nix develop --command sbt -batch ${{ inputs.command }}

@@ -2,17 +2,32 @@ name: 2024 (Lean)
 
 on:
   push:
+    branches: [main]
     paths: ["2024/**", ".github/workflows/2024.yml"]
   pull_request:
     paths: ["2024/**", ".github/workflows/2024.yml"]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: "2024"
     steps:
-      - uses: actions/checkout@v4
-      - uses: leanprover/lean-action@v1
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+      # Lake dependencies (batteries, Regex) and their builds. Lean comes from
+      # the flake, so its lock is part of the key.
+      - uses: actions/cache@v6
         with:
-          lake-package-directory: 2024
+          path: 2024/.lake/packages
+          key: lake-${{ runner.os }}-${{ hashFiles('2024/flake.lock', '2024/lake-manifest.json') }}
+      - run: nix develop --command lake build
