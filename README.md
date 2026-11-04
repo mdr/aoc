@@ -7,6 +7,7 @@ My [Advent of Code](https://adventofcode.com/) solutions. Each directory is a st
 | [`2015-2021-scala/`](2015-2021-scala) | 2015, 2021 | Scala 3 (sbt) |
 | [`2020/`](2020) | 2020 | Scala 3 (sbt) |
 | [`2022/`](2022) | 2022 | Idris 2 |
+| [`2023/`](2023) | 2023 | Unison (text export; the code lives on [Unison Share](https://share.unison-lang.org/@mdr/aoc-2023)) |
 | [`2024/`](2024) | 2024 | Lean 4 (Lake) |
 | [`2025/`](2025) | 2025 | Scala 3 (sbt) |
 
