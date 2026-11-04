@@ -1,0 +1,20 @@
+
+import aoc.util.Util
+object Day7 extends App {
+
+  def solvePartOne(inputPath: String): Unit = {
+    Util.loadString(inputPath)
+  }
+
+  def solvePartTwo(inputPath: String): Unit = {
+  }
+
+  println("Part One")
+  solvePartOne("day7/example.txt")
+  solvePartOne("day7/puzzle.txt")
+  println()
+  println("Part Two")
+  solvePartTwo("day7/example.txt")
+  solvePartTwo("day7/puzzle.txt")
+
+}
